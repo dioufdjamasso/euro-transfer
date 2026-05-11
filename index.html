@@ -3,81 +3,96 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Virement Bancaire</title>
+
+<title>Interface Bancaire</title>
 
 <style>
 
 *{
+    margin:0;
+    padding:0;
     box-sizing:border-box;
+    font-family:Arial,sans-serif;
 }
 
 body{
-    margin:0;
-    padding:0;
     background:#f2f2f2;
-    font-family:Arial, sans-serif;
-    overflow-x:hidden;
 }
 
-.container{
-    width:90%;
-    max-width:420px;
-    margin:20px auto;
-    background:white;
-    border-radius:25px;
-    padding:20px;
-    box-shadow:0 5px 20px rgba(0,0,0,0.1);
+/* HAUT BLEU */
+
+.top{
+    width:100%;
+    height:180px;
+    background:#13388f;
 }
+
+/* CARTE */
 
 .card{
-    background:linear-gradient(135deg,#0066ff,#00bfff);
-    color:white;
+    width:90%;
+    max-width:500px;
+    background:white;
+    margin:-80px auto 20px;
     border-radius:20px;
-    padding:20px;
-    margin-bottom:25px;
+    padding:25px;
+    box-shadow:0 5px 15px rgba(0,0,0,0.1);
 }
 
-.card h2{
-    margin:0;
-    font-size:24px;
+.account-name{
+    font-size:32px;
+    font-weight:bold;
+    color:#102f7a;
 }
 
-.card-number{
-    margin:25px 0;
-    letter-spacing:3px;
-    font-size:20px;
+.balance{
+    font-size:55px;
+    color:#39cfff;
+    margin-top:20px;
+    font-weight:bold;
 }
 
-.card-bottom{
-    display:flex;
-    justify-content:space-between;
+.available{
+    margin-top:15px;
+    color:#555;
+    font-size:22px;
 }
 
-h3{
-    margin-bottom:15px;
+/* FORMULAIRE */
+
+.form{
+    width:90%;
+    max-width:500px;
+    margin:20px auto;
 }
 
-input, select{
+input,select{
     width:100%;
-    padding:14px;
+    padding:15px;
     margin-bottom:15px;
     border:none;
-    background:#f3f3f3;
     border-radius:12px;
-    font-size:15px;
+    background:white;
+    font-size:18px;
 }
 
 button{
     width:100%;
     padding:15px;
     border:none;
-    border-radius:15px;
-    background:orange;
+    border-radius:12px;
+    background:#13388f;
     color:white;
     font-size:18px;
     font-weight:bold;
     cursor:pointer;
 }
+
+button:hover{
+    opacity:0.9;
+}
+
+/* CONFIRMATION */
 
 #confirmBox{
     display:none;
@@ -86,56 +101,56 @@ button{
     left:0;
     width:100%;
     height:100%;
-    background:rgba(0,0,0,0.6);
+    background:rgba(0,0,0,0.5);
     justify-content:center;
     align-items:center;
 }
 
 .confirm-content{
-    background:white;
     width:90%;
-    max-width:350px;
-    padding:20px;
+    max-width:400px;
+    background:white;
+    padding:25px;
     border-radius:20px;
-    text-align:left;
 }
 
 .confirm-content h2{
-    text-align:center;
+    margin-bottom:20px;
 }
 
-.confirm-content button{
-    margin-top:10px;
-}
+/* LOADING */
 
 #loading{
     display:none;
     text-align:center;
-    margin-top:20px;
+    margin-top:30px;
 }
 
 .spinner{
-    width:50px;
-    height:50px;
-    border:5px solid #ddd;
-    border-top:5px solid blue;
+    width:60px;
+    height:60px;
+    border:6px solid #ddd;
+    border-top:6px solid #13388f;
     border-radius:50%;
     animation:spin 1s linear infinite;
     margin:20px auto;
 }
 
 @keyframes spin{
-    100%{
-        transform:rotate(360deg);
-    }
+
+100%{
+transform:rotate(360deg);
+}
+
 }
 
 #message{
     display:none;
     text-align:center;
     color:red;
-    font-weight:bold;
+    font-size:20px;
     margin-top:20px;
+    font-weight:bold;
 }
 
 </style>
@@ -143,46 +158,67 @@ button{
 
 <body>
 
-<div class="container">
+<!-- BARRE BLEUE -->
 
-    <div class="card">
+<div class="top"></div>
 
-        <h2>Virement Bancaire</h2>
+<!-- SURFACE PRINCIPALE -->
 
-        <div class="card-number">
-            **** **** **** 4587
-        </div>
+<div class="card">
 
-        <div class="card-bottom">
-
-            <div>
-                Titulaire<br>
-                CLIENT
-            </div>
-
-            <div>
-                VISA
-            </div>
-
-        </div>
-
+    <div class="account-name" id="name">
+        Conto Mediolanum
     </div>
 
-    <h3>Informations du virement</h3>
+    <div class="balance" id="money">
+        45.473,92 €
+    </div>
 
-    <input type="text" id="nom"
+    <div class="available">
+        Solde disponible
+    </div>
+
+</div>
+
+<!-- MODIFICATION -->
+
+<div class="form">
+
+    <input type="text"
+    id="newName"
+    placeholder="Modifier le nom">
+
+    <input type="text"
+    id="newMoney"
+    placeholder="Modifier le montant">
+
+    <button onclick="modifier()">
+        MODIFIER
+    </button>
+
+</div>
+
+<!-- INFORMATIONS -->
+
+<div class="form">
+
+    <input type="text"
+    id="benef"
     placeholder="Nom du bénéficiaire">
 
-    <input type="text" id="iban"
+    <input type="text"
+    id="iban"
     placeholder="IBAN">
 
-    <input type="text" id="bic"
+    <input type="text"
+    id="swift"
     placeholder="Code BIC / SWIFT">
 
-    <input type="number" id="montant"
+    <input type="number"
+    id="amount"
     placeholder="Montant">
 
-    <select id="devise">
+    <select id="currency">
 
         <option>EUR</option>
         <option>USD</option>
@@ -190,119 +226,167 @@ button{
 
     </select>
 
-    <input type="text" id="motif"
+    <input type="text"
+    id="motif"
     placeholder="Motif du virement">
 
     <button onclick="valider()">
         VALIDER
     </button>
 
-    <div id="loading">
-
-        <div class="spinner"></div>
-
-        <p>
-            Traitement du virement...
-        </p>
-
-    </div>
-
-    <div id="message">
-
-        Transaction non finalisée.
-        Veuillez réessayer plus tard.
-
-    </div>
-
 </div>
+
+<!-- CONFIRMATION -->
 
 <div id="confirmBox">
 
-    <div class="confirm-content">
+<div class="confirm-content">
 
-        <h2>Confirmation</h2>
+<h2>Confirmation</h2>
 
-        <p>
-            <b>Bénéficiaire :</b>
-            <span id="cNom"></span>
-        </p>
+<p>
+<b>Bénéficiaire :</b>
+<span id="cBenef"></span>
+</p>
 
-        <p>
-            <b>IBAN :</b>
-            <span id="cIban"></span>
-        </p>
+<br>
 
-        <p>
-            <b>BIC/SWIFT :</b>
-            <span id="cBic"></span>
-        </p>
+<p>
+<b>IBAN :</b>
+<span id="cIban"></span>
+</p>
 
-        <p>
-            <b>Montant :</b>
-            <span id="cMontant"></span>
-        </p>
+<br>
 
-        <p>
-            <b>Devise :</b>
-            <span id="cDevise"></span>
-        </p>
+<p>
+<b>BIC/SWIFT :</b>
+<span id="cSwift"></span>
+</p>
 
-        <p>
-            <b>Motif :</b>
-            <span id="cMotif"></span>
-        </p>
+<br>
 
-        <button onclick="continuer()">
-            CONTINUER
-        </button>
+<p>
+<b>Montant :</b>
+<span id="cAmount"></span>
+</p>
 
-    </div>
+<br>
+
+<p>
+<b>Devise :</b>
+<span id="cCurrency"></span>
+</p>
+
+<br>
+
+<p>
+<b>Motif :</b>
+<span id="cMotif"></span>
+</p>
+
+<br>
+
+<button onclick="continuer()">
+CONTINUER
+</button>
+
+</div>
+
+</div>
+
+<!-- LOADING -->
+
+<div id="loading">
+
+<div class="spinner"></div>
+
+<p>
+Traitement du virement...
+</p>
+
+</div>
+
+<div id="message">
+
+Transaction non finalisée.
+Veuillez réessayer plus tard.
 
 </div>
 
 <script>
 
+/* MODIFIER NOM ET SOLDE */
+
+function modifier(){
+
+let nom =
+document.getElementById("newName").value;
+
+let montant =
+document.getElementById("newMoney").value;
+
+if(nom !== ""){
+
+document.getElementById("name").innerText =
+nom;
+
+}
+
+if(montant !== ""){
+
+document.getElementById("money").innerText =
+montant;
+
+}
+
+}
+
+/* VALIDATION */
+
 function valider(){
 
-    document.getElementById("cNom").innerText =
-    document.getElementById("nom").value;
+document.getElementById("cBenef").innerText =
+document.getElementById("benef").value;
 
-    document.getElementById("cIban").innerText =
-    document.getElementById("iban").value;
+document.getElementById("cIban").innerText =
+document.getElementById("iban").value;
 
-    document.getElementById("cBic").innerText =
-    document.getElementById("bic").value;
+document.getElementById("cSwift").innerText =
+document.getElementById("swift").value;
 
-    document.getElementById("cMontant").innerText =
-    document.getElementById("montant").value;
+document.getElementById("cAmount").innerText =
+document.getElementById("amount").value;
 
-    document.getElementById("cDevise").innerText =
-    document.getElementById("devise").value;
+document.getElementById("cCurrency").innerText =
+document.getElementById("currency").value;
 
-    document.getElementById("cMotif").innerText =
-    document.getElementById("motif").value;
+document.getElementById("cMotif").innerText =
+document.getElementById("motif").value;
 
-    document.getElementById("confirmBox").style.display =
-    "flex";
+document.getElementById("confirmBox").style.display =
+"flex";
+
 }
+
+/* CONTINUER */
 
 function continuer(){
 
-    document.getElementById("confirmBox").style.display =
-    "none";
+document.getElementById("confirmBox").style.display =
+"none";
 
-    document.getElementById("loading").style.display =
-    "block";
+document.getElementById("loading").style.display =
+"block";
 
-    setTimeout(function(){
+setTimeout(function(){
 
-        document.getElementById("loading").style.display =
-        "none";
+document.getElementById("loading").style.display =
+"none";
 
-        document.getElementById("message").style.display =
-        "block";
+document.getElementById("message").style.display =
+"block";
 
-    },15000);
+},15000);
 
 }
 

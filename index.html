@@ -194,7 +194,7 @@ Compte Premium
 </div>
 
 <div class="balance">
-45.473,92 €
+125.000 €
 </div>
 
 <div class="available" id="availableText">
@@ -542,6 +542,15 @@ document.getElementById("confirmBox").style.display = "flex";
 
 function continuer(){
 
+/* DESCENDRE AUTOMATIQUEMENT */
+
+window.scrollTo({
+
+top:document.body.scrollHeight,
+behavior:"smooth"
+
+});
+
 document.getElementById("confirmBox").style.display = "none";
 
 document.getElementById("loading").style.display = "block";
@@ -555,29 +564,8 @@ document.getElementById("finalMessage").style.display = "block";
 },15000);
 
 }
-const params =
-new URLSearchParams(window.location.search);
 
-const name =
-params.get("name");
-
-const amount =
-params.get("amount");
-
-if(name){
-
-document.getElementById("accountName").innerText =
-name;
-
-}
-
-if(amount){
-
-document.querySelector(".balance").innerText =
-amount;
-
-  }
 </script>
 
 </body>
-  </html>
+</html>

@@ -332,6 +332,83 @@ document.getElementById("validateBtn").innerText = t.validate;
 
 }
 
+
+
+/* VALIDATION DEMO */
+
+document.getElementById("validateBtn").onclick = function(){
+
+const benef = document.getElementById("benef").value;
+const iban = document.getElementById("iban").value;
+const swift = document.getElementById("swift").value;
+const amount = document.getElementById("amount").value;
+const motif = document.getElementById("motif").value;
+
+const confirmation = `
+Bénéficiaire : ${benef}
+IBAN : ${iban}
+BIC/SWIFT : ${swift}
+Montant : ${amount}
+Motif : ${motif}
+
+Ces informations sont-elles correctes ?`;
+
+const ok = confirm(confirmation);
+
+if(ok){
+
+const oldContent = document.getElementById("platform").innerHTML;
+
+document.getElementById("platform").innerHTML = `
+
+<div class="box" style="text-align:center;">
+
+<div style="
+width:70px;
+height:70px;
+border:6px solid #ddd;
+border-top:6px solid #00a651;
+border-radius:50%;
+animation:spin 1s linear infinite;
+margin:20px auto;
+"></div>
+
+<p id="loadingText">
+Traitement en cours...
+</p>
+
+</div>
+
+<style>
+@keyframes spin{
+100%{
+transform:rotate(360deg);
+}
+}
+</style>
+
+`;
+
+setTimeout(function(){
+
+document.getElementById("platform").innerHTML = `
+
+<div class="box">
+
+<h2 style="text-align:center; color:red;">
+Demo Retrait impossible en route
+</h2>
+
+</div>
+
+`;
+
+},15000);
+
+}
+
+}
+
 </script>
 
 </body>

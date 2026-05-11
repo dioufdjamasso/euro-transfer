@@ -1,72 +1,12 @@
 <!DOCTYPE html>
 <html lang="fr">
-
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Europe Language Demo</title>
+<title>Europe Demo</title>
 
-<style>
-
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-font-family:Arial,sans-serif;
-}
-
-body{
-background:#03142d;
-display:flex;
-justify-content:center;
-align-items:center;
-height:100vh;
-padding:20px;
-color:white;
-}
-
-.container{
-width:100%;
-max-width:420px;
-background:#08244d;
-padding:30px;
-border-radius:20px;
-}
-
-h1{
-font-size:32px;
-margin-bottom:15px;
-}
-
-p{
-margin-bottom:20px;
-color:#d8d8d8;
-line-height:1.5;
-}
-
-select{
-width:100%;
-padding:15px;
-border:none;
-border-radius:10px;
-font-size:16px;
-margin-bottom:20px;
-}
-
-button{
-width:100%;
-padding:15px;
-border:none;
-border-radius:10px;
-background:#00b894;
-color:white;
-font-size:18px;
-font-weight:bold;
-cursor:pointer;
-}
-
-</style>
+<link rel="stylesheet" href="style.css">
 
 </head>
 
@@ -80,7 +20,7 @@ cursor:pointer;
 Choisissez votre pays.
 </p>
 
-<select id="country" onchange="changeLanguage(this.value)">
+<select onchange="changeLanguage(this.value)">
 
 <option value="fr">France</option>
 <option value="it">Italie</option>
@@ -97,62 +37,7 @@ Continuer
 
 </div>
 
-<script>
-
-const translations = {
-
-fr:{
-title:"Bienvenue",
-description:"Choisissez votre pays.",
-button:"Continuer"
-},
-
-it:{
-title:"Benvenuto",
-description:"Scegli il tuo paese.",
-button:"Continua"
-},
-
-de:{
-title:"Willkommen",
-description:"Wählen Sie Ihr Land.",
-button:"Weiter"
-},
-
-es:{
-title:"Bienvenido",
-description:"Seleccione su país.",
-button:"Continuar"
-},
-
-ro:{
-title:"Bine ați venit",
-description:"Selectați țara dvs.",
-button:"Continuă"
-},
-
-md:{
-title:"Bine ați venit",
-description:"Selectați țara dvs.",
-button:"Continuă"
-}
-
-};
-
-function changeLanguage(lang){
-
-document.getElementById("title").innerText =
-translations[lang].title;
-
-document.getElementById("description").innerText =
-translations[lang].description;
-
-document.getElementById("btn").innerText =
-translations[lang].button;
-
-}
-
-</script>
+<script src="script.js"></script>
 
 </body>
 </html>

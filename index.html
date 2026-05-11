@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Demo Multilingue</title>
+<title>Plateforme Démo</title>
 
 <style>
 
@@ -15,118 +15,66 @@ font-family:Arial,sans-serif;
 }
 
 body{
-background:#eef2f7;
+background:#f1f1f5;
 padding:20px;
 }
 
-/* BOITE */
-
 .box{
-max-width:390px;
-margin:auto;
+width:90%;
+max-width:420px;
+margin:40px auto;
 background:white;
-border-radius:24px;
-padding:24px;
-box-shadow:0 8px 25px rgba(0,0,0,0.08);
-}
-
-/* HAUT */
-
-.top{
-display:flex;
-justify-content:space-between;
-align-items:center;
-}
-
-.logo{
-font-size:22px;
-font-weight:bold;
-color:#173c96;
-}
-
-.status{
-background:#e8f7ec;
-color:#16a34a;
-padding:6px 12px;
+padding:25px;
 border-radius:20px;
-font-size:13px;
+box-shadow:0 4px 15px rgba(0,0,0,0.08);
 }
 
-/* SOLDE */
-
-.balance-title{
-margin-top:25px;
-color:#666;
-font-size:15px;
-}
-
-.balance{
-font-size:42px;
-font-weight:bold;
-margin-top:8px;
-color:#111;
-}
-
-/* FORMULAIRE */
-
-.form{
-margin-top:30px;
+h2{
+margin-bottom:20px;
+text-align:center;
 }
 
 input,select,button{
-
 width:100%;
-padding:14px;
+padding:15px;
 margin-bottom:15px;
 border:none;
-border-radius:14px;
-font-size:15px;
-
+border-radius:12px;
+font-size:16px;
 }
 
 input,select{
-background:#f3f5f9;
+background:#f4f4f4;
 }
 
 button{
-background:#173c96;
+background:#00a651;
 color:white;
 font-weight:bold;
 cursor:pointer;
 }
 
-/* PAGES */
-
-#loginPage{
-display:none;
-}
-
-#platform{
-display:none;
-}
-
-/* LOADING */
-
-#loading{
-display:none;
+.card{
+background:white;
+border-radius:20px;
+padding:25px;
 text-align:center;
+box-shadow:0 4px 15px rgba(0,0,0,0.08);
+}
+
+.balance{
+font-size:52px;
+font-weight:bold;
 margin-top:20px;
 }
 
-.spinner{
-width:50px;
-height:50px;
-border:5px solid #ddd;
-border-top:5px solid #173c96;
-border-radius:50%;
-animation:spin 1s linear infinite;
-margin:20px auto;
+.form{
+margin-top:25px;
 }
 
-@keyframes spin{
-100%{
-transform:rotate(360deg);
-}
+#countryPage,
+#platform{
+display:none;
 }
 
 </style>
@@ -134,303 +82,223 @@ transform:rotate(360deg);
 
 <body>
 
-<!-- CHOIX PAYS -->
+<!-- CODE DEMO -->
 
-<div class="box" id="countryPage">
+<div class="box" id="loginPage">
 
-<h2 id="chooseText">
-Choisissez votre pays
+<h2 id="pinTitle">
+Code d'accès
 </h2>
 
-<br>
+<input type="password"
+id="pin"
+placeholder="Entrez le code">
 
-<select id="country">
-
-<option value="fr">France</option>
-<option value="it">Italie</option>
-<option value="de">Allemagne</option>
-<option value="es">Espagne</option>
-<option value="ro">Roumanie</option>
-<option value="gr">Grèce</option>
-<option value="md">Moldavie</option>
-
-</select>
-
-<button onclick="continuerPays()" id="continueBtn">
+<button onclick="checkPin()" id="pinBtn">
 CONTINUER
 </button>
 
 </div>
 
-<!-- PAGE CODE DEMO -->
+<!-- CHOIX PAYS -->
 
-<div class="box" id="loginPage">
+<div class="box" id="countryPage">
 
-<h2 id="pinTitle">
-Code démo
+<h2 id="countryTitle">
+Choisissez votre pays
 </h2>
 
-<br>
+<select id="country">
+<option value="fr">France</option>
+<option value="de">Allemagne</option>
+<option value="it">Italie</option>
+<option value="ro">Roumanie</option>
+<option value="es">Espagne</option>
+<option value="pt">Portugal</option>
+<option value="md">Moldavie</option>
+</select>
 
-<input type="password"
-id="pinInput"
-placeholder="Entrez le code démo">
-
-<button onclick="verifierPin()" id="validateBtn">
+<button onclick="openPlatform()" id="countryBtn">
 VALIDER
 </button>
 
 </div>
 
-<!-- TABLEAU -->
+<!-- PLATEFORME -->
 
-<div class="box" id="platform">
+<div id="platform">
 
-<div class="top">
+<div class="card">
 
-<div class="logo" id="name">
+<h2 id="accountName">
 Compte Premium
-</div>
+</h2>
 
-<div class="status" id="statusText">
-Actif
-</div>
-
-</div>
-
-<div class="balance-title" id="balanceText">
-Solde disponible
-</div>
-
-<div class="balance" id="money">
+<div class="balance">
 45.473,92 €
 </div>
 
-<!-- FORMULAIRE -->
+<p id="availableText">
+Solde disponible
+</p>
 
-<div class="form">
+</div>
 
-<input type="text"
-id="benef"
-placeholder="Nom du bénéficiaire">
+<div class="box form">
 
-<input type="text"
-id="iban"
-placeholder="IBAN">
+<input type="text" id="benef" placeholder="Nom du bénéficiaire">
 
-<input type="text"
-id="swift"
-placeholder="Code BIC / SWIFT">
+<input type="text" id="iban" placeholder="IBAN">
 
-<input type="number"
-id="amount"
-placeholder="Montant">
+<input type="text" id="swift" placeholder="Code BIC / SWIFT">
 
-<select id="currency">
+<input type="number" id="amount" placeholder="Montant">
 
+<select>
 <option>EUR</option>
 <option>USD</option>
 <option>XOF</option>
-
 </select>
 
-<input type="text"
-id="motif"
-placeholder="Motif du virement">
+<input type="text" id="motif" placeholder="Motif du virement">
 
-<button onclick="valider()" id="validateTransfer">
+<button id="validateBtn">
 VALIDER
 </button>
 
 </div>
-
-</div>
-
-<!-- LOADING -->
-
-<div id="loading">
-
-<div class="spinner"></div>
-
-<p id="loadingText">
-Traitement...
-</p>
 
 </div>
 
 <script>
 
-/* MODIFIER PAR LE LIEN */
+/* CODE DEMO */
 
-const params =
-new URLSearchParams(window.location.search);
-
-const nom =
-params.get("nom");
-
-const solde =
-params.get("solde");
-
-if(nom){
-
-document.getElementById("name").innerText =
-nom;
-
-}
-
-if(solde){
-
-document.getElementById("money").innerText =
-solde;
-
-}
+const DEMO_CODE = "123456";
 
 /* LANGUES */
-
-let lang = "fr";
 
 const texts = {
 
 fr:{
-choose:"Choisissez votre pays",
-continue:"CONTINUER",
-pin:"Code démo",
-placeholder:"Entrez le code démo",
-validate:"VALIDER",
-platform:"Compte Premium",
-balance:"Solde disponible",
-status:"Actif",
-loading:"Traitement...",
-success:"Démo terminée"
-},
-
-it:{
-choose:"Scegli il tuo paese",
-continue:"CONTINUA",
-pin:"Codice demo",
-placeholder:"Inserisci il codice demo",
-validate:"CONFERMA",
-platform:"Conto Premium",
-balance:"Saldo disponibile",
-status:"Attivo",
-loading:"Elaborazione...",
-success:"Demo completata"
+pinTitle:"Code d'accès",
+pinPlaceholder:"Entrez le code",
+pinBtn:"CONTINUER",
+countryTitle:"Choisissez votre pays",
+countryBtn:"VALIDER",
+account:"Compte Premium",
+available:"Solde disponible",
+benef:"Nom du bénéficiaire",
+swift:"Code BIC / SWIFT",
+amount:"Montant",
+motif:"Motif du virement",
+validate:"VALIDER"
 },
 
 de:{
-choose:"Wählen Sie Ihr Land",
-continue:"WEITER",
-pin:"Demo-Code",
-placeholder:"Demo-Code eingeben",
-validate:"BESTÄTIGEN",
-platform:"Premium Konto",
-balance:"Verfügbarer Kontostand",
-status:"Aktiv",
-loading:"Verarbeitung...",
-success:"Demo abgeschlossen"
+pinTitle:"Zugangscode",
+pinPlaceholder:"Code eingeben",
+pinBtn:"WEITER",
+countryTitle:"Wählen Sie Ihr Land",
+countryBtn:"BESTÄTIGEN",
+account:"Premium Konto",
+available:"Verfügbarer Kontostand",
+benef:"Name des Empfängers",
+swift:"BIC / SWIFT Code",
+amount:"Betrag",
+motif:"Überweisungsgrund",
+validate:"BESTÄTIGEN"
 },
 
-es:{
-choose:"Seleccione su país",
-continue:"CONTINUAR",
-pin:"Código demo",
-placeholder:"Ingrese el código demo",
-validate:"VALIDAR",
-platform:"Cuenta Premium",
-balance:"Saldo disponible",
-status:"Activo",
-loading:"Procesando...",
-success:"Demostración terminada"
+it:{
+pinTitle:"Codice di accesso",
+pinPlaceholder:"Inserisci il codice",
+pinBtn:"CONTINUA",
+countryTitle:"Scegli il tuo paese",
+countryBtn:"CONFERMA",
+account:"Conto Premium",
+available:"Saldo disponibile",
+benef:"Nome del beneficiario",
+swift:"Codice BIC / SWIFT",
+amount:"Importo",
+motif:"Motivo del bonifico",
+validate:"CONFERMA"
 },
 
 ro:{
-choose:"Alegeți țara",
-continue:"CONTINUĂ",
-pin:"Cod demo",
-placeholder:"Introduceți codul demo",
-validate:"VALIDARE",
-platform:"Cont Premium",
-balance:"Sold disponibil",
-status:"Activ",
-loading:"Procesare...",
-success:"Demo finalizată"
+pinTitle:"Cod de acces",
+pinPlaceholder:"Introduceți codul",
+pinBtn:"CONTINUĂ",
+countryTitle:"Alegeți țara",
+countryBtn:"VALIDARE",
+account:"Cont Premium",
+available:"Sold disponibil",
+benef:"Numele beneficiarului",
+swift:"Cod BIC / SWIFT",
+amount:"Sumă",
+motif:"Motivul transferului",
+validate:"VALIDARE"
 },
 
-gr:{
-choose:"Επιλέξτε τη χώρα σας",
-continue:"ΣΥΝΕΧΕΙΑ",
-pin:"Κωδικός demo",
-placeholder:"Εισαγάγετε demo κωδικό",
-validate:"ΕΠΙΒΕΒΑΙΩΣΗ",
-platform:"Premium Λογαριασμός",
-balance:"Διαθέσιμο υπόλοιπο",
-status:"Ενεργό",
-loading:"Επεξεργασία...",
-success:"Η δοκιμή ολοκληρώθηκε"
+es:{
+pinTitle:"Código de acceso",
+pinPlaceholder:"Ingrese el código",
+pinBtn:"CONTINUAR",
+countryTitle:"Seleccione su país",
+countryBtn:"VALIDAR",
+account:"Cuenta Premium",
+available:"Saldo disponible",
+benef:"Nombre del beneficiario",
+swift:"Código BIC / SWIFT",
+amount:"Monto",
+motif:"Motivo de transferencia",
+validate:"VALIDAR"
+},
+
+pt:{
+pinTitle:"Código de acesso",
+pinPlaceholder:"Digite o código",
+pinBtn:"CONTINUAR",
+countryTitle:"Escolha seu país",
+countryBtn:"VALIDAR",
+account:"Conta Premium",
+available:"Saldo disponível",
+benef:"Nome do beneficiário",
+swift:"Código BIC / SWIFT",
+amount:"Valor",
+motif:"Motivo da transferência",
+validate:"VALIDAR"
 },
 
 md:{
-choose:"Alegeți țara",
-continue:"CONTINUĂ",
-pin:"Cod demo",
-placeholder:"Introduceți codul demo",
-validate:"VALIDARE",
-platform:"Cont Premium",
-balance:"Sold disponibil",
-status:"Activ",
-loading:"Procesare...",
-success:"Demo finalizată"
+pinTitle:"Cod de acces",
+pinPlaceholder:"Introduceți codul",
+pinBtn:"CONTINUĂ",
+countryTitle:"Alegeți țara",
+countryBtn:"VALIDARE",
+account:"Cont Premium",
+available:"Sold disponibil",
+benef:"Numele beneficiarului",
+swift:"Cod BIC / SWIFT",
+amount:"Sumă",
+motif:"Motivul transferului",
+validate:"VALIDARE"
 }
 
 };
 
-/* CHOIX PAYS */
+let currentLang = "fr";
 
-function continuerPays(){
+/* CODE */
 
-lang =
-document.getElementById("country").value;
+function checkPin(){
 
-document.getElementById("countryPage").style.display =
-"none";
+const code = document.getElementById("pin").value;
 
-document.getElementById("loginPage").style.display =
-"block";
+if(code === DEMO_CODE){
 
-document.getElementById("pinTitle").innerText =
-texts[lang].pin;
-
-document.getElementById("pinInput").placeholder =
-texts[lang].placeholder;
-
-document.getElementById("validateBtn").innerText =
-texts[lang].validate;
-
-}
-
-/* CODE DEMO */
-
-function verifierPin(){
-
-const code =
-document.getElementById("pinInput").value;
-
-if(code === "123456"){
-
-document.getElementById("loginPage").style.display =
-"none";
-
-document.getElementById("platform").style.display =
-"block";
-
-document.getElementById("name").innerText =
-texts[lang].platform;
-
-document.getElementById("balanceText").innerText =
-texts[lang].balance;
-
-document.getElementById("statusText").innerText =
-texts[lang].status;
+document.getElementById("loginPage").style.display = "none";
+document.getElementById("countryPage").style.display = "block";
 
 }else{
 
@@ -440,25 +308,27 @@ alert("Code incorrect");
 
 }
 
-/* VALIDER */
+/* OUVRIR */
 
-function valider(){
+function openPlatform(){
 
-document.getElementById("platform").style.display =
-"none";
+currentLang = document.getElementById("country").value;
 
-document.getElementById("loading").style.display =
-"block";
+const t = texts[currentLang];
 
-document.getElementById("loadingText").innerText =
-texts[lang].loading;
+document.getElementById("countryPage").style.display = "none";
+document.getElementById("platform").style.display = "block";
 
-setTimeout(function(){
+/* TEXTES */
 
-document.getElementById("loadingText").innerText =
-texts[lang].success;
+document.getElementById("accountName").innerText = t.account;
+document.getElementById("availableText").innerText = t.available;
 
-},5000);
+document.getElementById("benef").placeholder = t.benef;
+document.getElementById("swift").placeholder = t.swift;
+document.getElementById("amount").placeholder = t.amount;
+document.getElementById("motif").placeholder = t.motif;
+document.getElementById("validateBtn").innerText = t.validate;
 
 }
 

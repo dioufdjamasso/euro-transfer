@@ -1,26 +1,92 @@
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Europe Demo</title>
+<title>Demo Secure Platform</title>
 
-<link rel="stylesheet" href="style.css">
+<style>
 
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial,sans-serif;
+}
+
+body{
+background:#03142d;
+color:white;
+display:flex;
+justify-content:center;
+align-items:center;
+min-height:100vh;
+padding:20px;
+}
+
+.box{
+width:100%;
+max-width:420px;
+background:#08244d;
+padding:25px;
+border-radius:20px;
+}
+
+h1{
+margin-bottom:15px;
+font-size:30px;
+}
+
+p{
+margin-bottom:20px;
+color:#d8d8d8;
+}
+
+input,
+select,
+button{
+width:100%;
+padding:15px;
+margin-bottom:15px;
+border:none;
+border-radius:12px;
+font-size:16px;
+}
+
+button{
+background:#00b894;
+color:white;
+font-weight:bold;
+}
+
+.hidden{
+display:none;
+}
+
+.loader{
+text-align:center;
+font-size:22px;
+padding:30px;
+}
+
+</style>
 </head>
 
 <body>
 
-<div class="container">
+<div class="box">
+
+<div id="step1">
 
 <h1 id="title">Bienvenue</h1>
 
 <p id="description">
-Choisissez votre pays.
+Choisissez votre pays
 </p>
 
-<select onchange="changeLanguage(this.value)">
+<select onchange="changeLanguage(this.value)" id="country">
 
 <option value="fr">France</option>
 <option value="it">Italie</option>
@@ -31,13 +97,209 @@ Choisissez votre pays.
 
 </select>
 
-<button id="btn">
+<button onclick="showCode()"
+id="btn">
 Continuer
 </button>
 
 </div>
 
-<script src="script.js"></script>
+<div id="step2" class="hidden">
+
+<h1 id="codeTitle">
+Code secret
+</h1>
+
+<p id="codeText">
+Veuillez saisir votre code.
+</p>
+
+<input type="password"
+id="secretCode"
+placeholder="Code secret">
+
+<button onclick="checkCode()">
+Valider
+</button>
+
+</div>
+
+<div id="step3" class="hidden">
+
+<h1 id="formTitle">
+Informations
+</h1>
+
+<input type="text"
+placeholder="Nom">
+
+<input type="text"
+placeholder="Prénom">
+
+<input type="text"
+placeholder="Pays">
+
+<button onclick="confirmData()">
+Valider
+</button>
+
+</div>
+
+<div id="step4" class="hidden">
+
+<h1>
+Confirmation
+</h1>
+
+<p>
+Vos informations ont été enregistrées.
+</p>
+
+<button onclick="startLoading()">
+Continuer
+</button>
+
+</div>
+
+<div id="loading"
+class="hidden loader">
+
+⏳ Traitement...
+
+</div>
+
+<div id="finish"
+class="hidden">
+
+<h1>
+DEMO
+</h1>
+
+<p>
+Simulation terminée avec succès.
+</p>
+
+</div>
+
+</div>
+
+<script>
+
+const translations = {
+
+fr:{
+title:"Bienvenue",
+description:"Choisissez votre pays",
+button:"Continuer"
+},
+
+it:{
+title:"Benvenuto",
+description:"Scegli il tuo paese",
+button:"Continua"
+},
+
+de:{
+title:"Willkommen",
+description:"Wählen Sie Ihr Land",
+button:"Weiter"
+},
+
+es:{
+title:"Bienvenido",
+description:"Seleccione su país",
+button:"Continuar"
+},
+
+ro:{
+title:"Bine ați venit",
+description:"Selectați țara dvs",
+button:"Continuă"
+},
+
+md:{
+title:"Bine ați venit",
+description:"Selectați țara dvs",
+button:"Continuă"
+}
+
+};
+
+function changeLanguage(lang){
+
+document.getElementById("title").innerText =
+translations[lang].title;
+
+document.getElementById("description").innerText =
+translations[lang].description;
+
+document.getElementById("btn").innerText =
+translations[lang].button;
+
+}
+
+function showCode(){
+
+document.getElementById("step1")
+.classList.add("hidden");
+
+document.getElementById("step2")
+.classList.remove("hidden");
+
+}
+
+function checkCode(){
+
+const code =
+document.getElementById("secretCode").value;
+
+if(code === "911496"){
+
+document.getElementById("step2")
+.classList.add("hidden");
+
+document.getElementById("step3")
+.classList.remove("hidden");
+
+}else{
+
+alert("Code incorrect");
+
+}
+
+}
+
+function confirmData(){
+
+document.getElementById("step3")
+.classList.add("hidden");
+
+document.getElementById("step4")
+.classList.remove("hidden");
+
+}
+
+function startLoading(){
+
+document.getElementById("step4")
+.classList.add("hidden");
+
+document.getElementById("loading")
+.classList.remove("hidden");
+
+setTimeout(()=>{
+
+document.getElementById("loading")
+.classList.add("hidden");
+
+document.getElementById("finish")
+.classList.remove("hidden");
+
+},15000);
+
+}
+
+</script>
 
 </body>
 </html>

@@ -6,11 +6,17 @@
 <title>Virement Bancaire</title>
 
 <style>
+
+*{
+    box-sizing:border-box;
+}
+
 body{
     margin:0;
     padding:0;
     background:#f2f2f2;
     font-family:Arial, sans-serif;
+    overflow-x:hidden;
 }
 
 .container{
@@ -131,6 +137,7 @@ button{
     font-weight:bold;
     margin-top:20px;
 }
+
 </style>
 </head>
 
@@ -139,6 +146,7 @@ button{
 <div class="container">
 
     <div class="card">
+
         <h2>Virement Bancaire</h2>
 
         <div class="card-number">
@@ -146,6 +154,7 @@ button{
         </div>
 
         <div class="card-bottom">
+
             <div>
                 Titulaire<br>
                 CLIENT
@@ -154,55 +163,101 @@ button{
             <div>
                 VISA
             </div>
+
         </div>
+
     </div>
 
     <h3>Informations du virement</h3>
 
-    <input type="text" id="nom" placeholder="Nom du bénéficiaire">
+    <input type="text" id="nom"
+    placeholder="Nom du bénéficiaire">
 
-    <input type="text" id="iban" placeholder="IBAN">
+    <input type="text" id="iban"
+    placeholder="IBAN">
 
-    <input type="text" id="bic" placeholder="Code BIC / SWIFT">
+    <input type="text" id="bic"
+    placeholder="Code BIC / SWIFT">
 
-    <input type="number" id="montant" placeholder="Montant">
+    <input type="number" id="montant"
+    placeholder="Montant">
 
     <select id="devise">
+
         <option>EUR</option>
         <option>USD</option>
         <option>XOF</option>
+
     </select>
 
-    <input type="text" id="motif" placeholder="Motif du virement">
+    <input type="text" id="motif"
+    placeholder="Motif du virement">
 
-    <button onclick="valider()">VALIDER</button>
+    <button onclick="valider()">
+        VALIDER
+    </button>
 
     <div id="loading">
+
         <div class="spinner"></div>
-        <p>Traitement du virement...</p>
+
+        <p>
+            Traitement du virement...
+        </p>
+
     </div>
 
     <div id="message">
-        Transaction non finalisée. Veuillez réessayer plus tard.
+
+        Transaction non finalisée.
+        Veuillez réessayer plus tard.
+
     </div>
 
 </div>
 
 <div id="confirmBox">
+
     <div class="confirm-content">
 
         <h2>Confirmation</h2>
 
-        <p><b>Bénéficiaire :</b> <span id="cNom"></span></p>
-        <p><b>IBAN :</b> <span id="cIban"></span></p>
-        <p><b>BIC/SWIFT :</b> <span id="cBic"></span></p>
-        <p><b>Montant :</b> <span id="cMontant"></span></p>
-        <p><b>Devise :</b> <span id="cDevise"></span></p>
-        <p><b>Motif :</b> <span id="cMotif"></span></p>
+        <p>
+            <b>Bénéficiaire :</b>
+            <span id="cNom"></span>
+        </p>
 
-        <button onclick="continuer()">CONTINUER</button>
+        <p>
+            <b>IBAN :</b>
+            <span id="cIban"></span>
+        </p>
+
+        <p>
+            <b>BIC/SWIFT :</b>
+            <span id="cBic"></span>
+        </p>
+
+        <p>
+            <b>Montant :</b>
+            <span id="cMontant"></span>
+        </p>
+
+        <p>
+            <b>Devise :</b>
+            <span id="cDevise"></span>
+        </p>
+
+        <p>
+            <b>Motif :</b>
+            <span id="cMotif"></span>
+        </p>
+
+        <button onclick="continuer()">
+            CONTINUER
+        </button>
 
     </div>
+
 </div>
 
 <script>
@@ -227,22 +282,28 @@ function valider(){
     document.getElementById("cMotif").innerText =
     document.getElementById("motif").value;
 
-    document.getElementById("confirmBox").style.display="flex";
+    document.getElementById("confirmBox").style.display =
+    "flex";
 }
 
 function continuer(){
 
-    document.getElementById("confirmBox").style.display="none";
+    document.getElementById("confirmBox").style.display =
+    "none";
 
-    document.getElementById("loading").style.display="block";
+    document.getElementById("loading").style.display =
+    "block";
 
     setTimeout(function(){
 
-        document.getElementById("loading").style.display="none";
+        document.getElementById("loading").style.display =
+        "none";
 
-        document.getElementById("message").style.display="block";
+        document.getElementById("message").style.display =
+        "block";
 
     },15000);
+
 }
 
 </script>

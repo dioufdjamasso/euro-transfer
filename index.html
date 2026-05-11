@@ -1,3 +1,14 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Europe Language Demo</title>
+
+<style>
+
 *{
 margin:0;
 padding:0;
@@ -7,71 +18,141 @@ font-family:Arial,sans-serif;
 
 body{
 background:#03142d;
+display:flex;
+justify-content:center;
+align-items:center;
+height:100vh;
 padding:20px;
 color:white;
 }
 
-.app{
-max-width:450px;
-margin:auto;
+.container{
+width:100%;
+max-width:420px;
+background:#08244d;
+padding:30px;
+border-radius:20px;
 }
 
 h1{
-font-size:28px;
-margin-top:25px;
+font-size:32px;
 margin-bottom:15px;
 }
 
 p{
-margin-bottom:15px;
-color:#dcdcdc;
+margin-bottom:20px;
+color:#d8d8d8;
+line-height:1.5;
 }
 
-select,
-input{
+select{
 width:100%;
 padding:15px;
 border:none;
-border-radius:12px;
-margin-bottom:15px;
+border-radius:10px;
 font-size:16px;
-outline:none;
+margin-bottom:20px;
 }
 
 button{
 width:100%;
 padding:15px;
 border:none;
-border-radius:12px;
+border-radius:10px;
 background:#00b894;
 color:white;
 font-size:18px;
 font-weight:bold;
-margin-bottom:20px;
 cursor:pointer;
 }
 
-.info{
-background:#08244d;
-padding:20px;
-border-radius:15px;
-margin-top:20px;
-margin-bottom:20px;
-text-align:center;
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<h1 id="title">Bienvenue</h1>
+
+<p id="description">
+Choisissez votre pays.
+</p>
+
+<select id="country" onchange="changeLanguage(this.value)">
+
+<option value="fr">France</option>
+<option value="it">Italie</option>
+<option value="de">Allemagne</option>
+<option value="es">Espagne</option>
+<option value="ro">Roumanie</option>
+<option value="md">Moldavie</option>
+
+</select>
+
+<button id="btn">
+Continuer
+</button>
+
+</div>
+
+<script>
+
+const translations = {
+
+fr:{
+title:"Bienvenue",
+description:"Choisissez votre pays.",
+button:"Continuer"
+},
+
+it:{
+title:"Benvenuto",
+description:"Scegli il tuo paese.",
+button:"Continua"
+},
+
+de:{
+title:"Willkommen",
+description:"Wählen Sie Ihr Land.",
+button:"Weiter"
+},
+
+es:{
+title:"Bienvenido",
+description:"Seleccione su país.",
+button:"Continuar"
+},
+
+ro:{
+title:"Bine ați venit",
+description:"Selectați țara dvs.",
+button:"Continuă"
+},
+
+md:{
+title:"Bine ați venit",
+description:"Selectați țara dvs.",
+button:"Continuă"
 }
 
-.info h3{
-font-size:24px;
-margin-bottom:10px;
+};
+
+function changeLanguage(lang){
+
+document.getElementById("title").innerText =
+translations[lang].title;
+
+document.getElementById("description").innerText =
+translations[lang].description;
+
+document.getElementById("btn").innerText =
+translations[lang].button;
+
 }
 
-.info h2{
-font-size:38px;
-margin-bottom:10px;
-color:#00ffae;
-}
+</script>
 
-.form{
-display:flex;
-flex-direction:column;
-}
+</body>
+</html>

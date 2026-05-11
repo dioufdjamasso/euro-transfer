@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Plateforme Démo</title>
+<title>Demo Platform</title>
 
 <style>
 
@@ -16,35 +16,61 @@ font-family:Arial,sans-serif;
 
 body{
 background:#f1f1f5;
-padding:20px;
+}
+
+.top{
+width:100%;
+height:140px;
+background:#00a651;
+}
+
+.card{
+width:90%;
+max-width:520px;
+background:white;
+margin:-70px auto 20px;
+border-radius:22px;
+padding:30px;
+text-align:center;
+box-shadow:0 4px 15px rgba(0,0,0,0.08);
+}
+
+.name{
+font-size:24px;
+color:#444;
+}
+
+.balance{
+font-size:55px;
+font-weight:bold;
+margin-top:20px;
+color:#444;
+}
+
+.available{
+margin-top:10px;
+font-size:18px;
+color:#666;
 }
 
 .box{
 width:90%;
-max-width:420px;
-margin:40px auto;
-background:white;
-padding:25px;
-border-radius:20px;
-box-shadow:0 4px 15px rgba(0,0,0,0.08);
-}
-
-h2{
-margin-bottom:20px;
-text-align:center;
+max-width:520px;
+margin:20px auto;
 }
 
 input,select,button{
 width:100%;
-padding:15px;
+padding:16px;
 margin-bottom:15px;
 border:none;
-border-radius:12px;
+border-radius:14px;
 font-size:16px;
 }
 
 input,select{
-background:#f4f4f4;
+background:white;
+box-shadow:0 2px 5px rgba(0,0,0,0.05);
 }
 
 button{
@@ -54,27 +80,52 @@ font-weight:bold;
 cursor:pointer;
 }
 
-.card{
-background:white;
-border-radius:20px;
-padding:25px;
-text-align:center;
-box-shadow:0 4px 15px rgba(0,0,0,0.08);
-}
-
-.balance{
-font-size:52px;
-font-weight:bold;
-margin-top:20px;
-}
-
-.form{
-margin-top:25px;
-}
-
 #countryPage,
-#platform{
+#platform,
+#confirmBox,
+#loading,
+#finalMessage{
 display:none;
+}
+
+.modal{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:rgba(0,0,0,0.5);
+display:flex;
+justify-content:center;
+align-items:center;
+}
+
+.modal-content{
+background:white;
+width:90%;
+max-width:400px;
+padding:25px;
+border-radius:20px;
+}
+
+.spinner{
+width:70px;
+height:70px;
+border:7px solid #ddd;
+border-top:7px solid #00a651;
+border-radius:50%;
+animation:spin 1s linear infinite;
+margin:30px auto;
+}
+
+@keyframes spin{
+100%{
+transform:rotate(360deg);
+}
+}
+
+.center{
+text-align:center;
 }
 
 </style>
@@ -82,27 +133,31 @@ display:none;
 
 <body>
 
-<!-- CODE DEMO -->
+<!-- LOGIN -->
 
 <div class="box" id="loginPage">
 
-<h2 id="pinTitle">
+<div class="card">
+
+<h2 id="loginTitle">
 Code d'accès
 </h2>
 
-<input type="password"
-id="pin"
-placeholder="Entrez le code">
+<input type="password" id="pin" placeholder="Entrez le code">
 
-<button onclick="checkPin()" id="pinBtn">
+<button onclick="checkPin()" id="loginBtn">
 CONTINUER
 </button>
 
 </div>
 
-<!-- CHOIX PAYS -->
+</div>
+
+<!-- COUNTRY -->
 
 <div class="box" id="countryPage">
+
+<div class="card">
 
 <h2 id="countryTitle">
 Choisissez votre pays
@@ -124,27 +179,31 @@ VALIDER
 
 </div>
 
-<!-- PLATEFORME -->
+</div>
+
+<!-- PLATFORM -->
 
 <div id="platform">
 
+<div class="top"></div>
+
 <div class="card">
 
-<h2 id="accountName">
+<div class="name" id="accountName">
 Compte Premium
-</h2>
+</div>
 
 <div class="balance">
 45.473,92 €
 </div>
 
-<p id="availableText">
+<div class="available" id="availableText">
 Solde disponible
-</p>
+</div>
 
 </div>
 
-<div class="box form">
+<div class="box">
 
 <input type="text" id="benef" placeholder="Nom du bénéficiaire">
 
@@ -154,7 +213,7 @@ Solde disponible
 
 <input type="number" id="amount" placeholder="Montant">
 
-<select>
+<select id="currency">
 <option>EUR</option>
 <option>USD</option>
 <option>XOF</option>
@@ -162,7 +221,7 @@ Solde disponible
 
 <input type="text" id="motif" placeholder="Motif du virement">
 
-<button id="validateBtn">
+<button onclick="valider()" id="validateBtn">
 VALIDER
 </button>
 
@@ -170,20 +229,81 @@ VALIDER
 
 </div>
 
+<!-- CONFIRMATION -->
+
+<div id="confirmBox" class="modal">
+
+<div class="modal-content">
+
+<h2 id="confirmTitle">
+Confirmation
+</h2>
+
+<p><b id="txtBenef">Bénéficiaire :</b> <span id="cBenef"></span></p>
+<br>
+<p><b>IBAN :</b> <span id="cIban"></span></p>
+<br>
+<p><b id="txtSwift">BIC/SWIFT :</b> <span id="cSwift"></span></p>
+<br>
+<p><b id="txtAmount">Montant :</b> <span id="cAmount"></span></p>
+<br>
+<p><b id="txtCurrency">Devise :</b> <span id="cCurrency"></span></p>
+<br>
+<p><b id="txtMotif">Motif :</b> <span id="cMotif"></span></p>
+<br><br>
+
+<p id="correctText">
+Ces informations sont-elles correctes ?
+</p>
+
+<br>
+
+<button onclick="continuer()" id="confirmBtn">
+CONFIRMER
+</button>
+
+</div>
+
+</div>
+
+<!-- LOADING -->
+
+<div id="loading" class="center">
+
+<div class="spinner"></div>
+
+<p id="loadingText">
+Vérification sécurisée de la transaction...
+</p>
+
+</div>
+
+<!-- FINAL -->
+
+<div id="finalMessage" class="card">
+
+<h2 id="finalTitle" style="color:#d62828;">
+La transaction a échoué
+</h2>
+
+<br>
+
+<p id="finalText">
+Veuillez contacter votre directeur pour plus d’informations.
+</p>
+
+</div>
+
 <script>
 
-/* CODE DEMO */
-
 const DEMO_CODE = "123456";
-
-/* LANGUES */
 
 const texts = {
 
 fr:{
-pinTitle:"Code d'accès",
-pinPlaceholder:"Entrez le code",
-pinBtn:"CONTINUER",
+loginTitle:"Code d'accès",
+loginPlaceholder:"Entrez le code",
+loginBtn:"CONTINUER",
 countryTitle:"Choisissez votre pays",
 countryBtn:"VALIDER",
 account:"Compte Premium",
@@ -192,13 +312,19 @@ benef:"Nom du bénéficiaire",
 swift:"Code BIC / SWIFT",
 amount:"Montant",
 motif:"Motif du virement",
-validate:"VALIDER"
+validate:"VALIDER",
+confirm:"Confirmation",
+correct:"Ces informations sont-elles correctes ?",
+confirmBtn:"CONFIRMER",
+loading:"Vérification sécurisée de la transaction...",
+finalTitle:"La transaction a échoué",
+finalText:"Veuillez contacter votre directeur pour plus d’informations."
 },
 
 de:{
-pinTitle:"Zugangscode",
-pinPlaceholder:"Code eingeben",
-pinBtn:"WEITER",
+loginTitle:"Zugangscode",
+loginPlaceholder:"Code eingeben",
+loginBtn:"WEITER",
 countryTitle:"Wählen Sie Ihr Land",
 countryBtn:"BESTÄTIGEN",
 account:"Premium Konto",
@@ -207,13 +333,19 @@ benef:"Name des Empfängers",
 swift:"BIC / SWIFT Code",
 amount:"Betrag",
 motif:"Überweisungsgrund",
-validate:"BESTÄTIGEN"
+validate:"BESTÄTIGEN",
+confirm:"Bestätigung",
+correct:"Sind diese Informationen korrekt?",
+confirmBtn:"BESTÄTIGEN",
+loading:"Sichere Überprüfung der Transaktion...",
+finalTitle:"Die Transaktion ist fehlgeschlagen",
+finalText:"Bitte kontaktieren Sie Ihren Direktor für weitere Informationen."
 },
 
 it:{
-pinTitle:"Codice di accesso",
-pinPlaceholder:"Inserisci il codice",
-pinBtn:"CONTINUA",
+loginTitle:"Codice di accesso",
+loginPlaceholder:"Inserisci il codice",
+loginBtn:"CONTINUA",
 countryTitle:"Scegli il tuo paese",
 countryBtn:"CONFERMA",
 account:"Conto Premium",
@@ -222,13 +354,19 @@ benef:"Nome del beneficiario",
 swift:"Codice BIC / SWIFT",
 amount:"Importo",
 motif:"Motivo del bonifico",
-validate:"CONFERMA"
+validate:"CONFERMA",
+confirm:"Conferma",
+correct:"Queste informazioni sono corrette?",
+confirmBtn:"CONFERMA",
+loading:"Verifica sicura della transazione...",
+finalTitle:"La transazione non è riuscita",
+finalText:"Contatta il tuo direttore per maggiori informazioni."
 },
 
 ro:{
-pinTitle:"Cod de acces",
-pinPlaceholder:"Introduceți codul",
-pinBtn:"CONTINUĂ",
+loginTitle:"Cod de acces",
+loginPlaceholder:"Introduceți codul",
+loginBtn:"CONTINUĂ",
 countryTitle:"Alegeți țara",
 countryBtn:"VALIDARE",
 account:"Cont Premium",
@@ -237,13 +375,19 @@ benef:"Numele beneficiarului",
 swift:"Cod BIC / SWIFT",
 amount:"Sumă",
 motif:"Motivul transferului",
-validate:"VALIDARE"
+validate:"VALIDARE",
+confirm:"Confirmare",
+correct:"Aceste informații sunt corecte?",
+confirmBtn:"CONFIRMĂ",
+loading:"Verificare securizată a tranzacției...",
+finalTitle:"Tranzacția a eșuat",
+finalText:"Vă rugăm să contactați directorul pentru mai multe informații."
 },
 
 es:{
-pinTitle:"Código de acceso",
-pinPlaceholder:"Ingrese el código",
-pinBtn:"CONTINUAR",
+loginTitle:"Código de acceso",
+loginPlaceholder:"Ingrese el código",
+loginBtn:"CONTINUAR",
 countryTitle:"Seleccione su país",
 countryBtn:"VALIDAR",
 account:"Cuenta Premium",
@@ -252,13 +396,19 @@ benef:"Nombre del beneficiario",
 swift:"Código BIC / SWIFT",
 amount:"Monto",
 motif:"Motivo de transferencia",
-validate:"VALIDAR"
+validate:"VALIDAR",
+confirm:"Confirmación",
+correct:"¿Esta información es correcta?",
+confirmBtn:"CONFIRMAR",
+loading:"Verificación segura de la transacción...",
+finalTitle:"La transacción falló",
+finalText:"Póngase en contacto con su director para más información."
 },
 
 pt:{
-pinTitle:"Código de acesso",
-pinPlaceholder:"Digite o código",
-pinBtn:"CONTINUAR",
+loginTitle:"Código de acesso",
+loginPlaceholder:"Digite o código",
+loginBtn:"CONTINUAR",
 countryTitle:"Escolha seu país",
 countryBtn:"VALIDAR",
 account:"Conta Premium",
@@ -267,13 +417,19 @@ benef:"Nome do beneficiário",
 swift:"Código BIC / SWIFT",
 amount:"Valor",
 motif:"Motivo da transferência",
-validate:"VALIDAR"
+validate:"VALIDAR",
+confirm:"Confirmação",
+correct:"Essas informações estão corretas?",
+confirmBtn:"CONFIRMAR",
+loading:"Verificação segura da transação...",
+finalTitle:"A transação falhou",
+finalText:"Entre em contato com seu diretor para mais informações."
 },
 
 md:{
-pinTitle:"Cod de acces",
-pinPlaceholder:"Introduceți codul",
-pinBtn:"CONTINUĂ",
+loginTitle:"Cod de acces",
+loginPlaceholder:"Introduceți codul",
+loginBtn:"CONTINUĂ",
 countryTitle:"Alegeți țara",
 countryBtn:"VALIDARE",
 account:"Cont Premium",
@@ -282,14 +438,18 @@ benef:"Numele beneficiarului",
 swift:"Cod BIC / SWIFT",
 amount:"Sumă",
 motif:"Motivul transferului",
-validate:"VALIDARE"
+validate:"VALIDARE",
+confirm:"Confirmare",
+correct:"Aceste informații sunt corecte?",
+confirmBtn:"CONFIRMĂ",
+loading:"Verificare securizată a tranzacției...",
+finalTitle:"Tranzacția a eșuat",
+finalText:"Vă rugăm să contactați directorul pentru mai multe informații."
 }
 
 };
 
 let currentLang = "fr";
-
-/* CODE */
 
 function checkPin(){
 
@@ -308,8 +468,6 @@ alert("Code incorrect");
 
 }
 
-/* OUVRIR */
-
 function openPlatform(){
 
 currentLang = document.getElementById("country").value;
@@ -319,7 +477,18 @@ const t = texts[currentLang];
 document.getElementById("countryPage").style.display = "none";
 document.getElementById("platform").style.display = "block";
 
-/* TEXTES */
+/* LOGIN */
+
+document.getElementById("loginTitle").innerText = t.loginTitle;
+document.getElementById("pin").placeholder = t.loginPlaceholder;
+document.getElementById("loginBtn").innerText = t.loginBtn;
+
+/* COUNTRY */
+
+document.getElementById("countryTitle").innerText = t.countryTitle;
+document.getElementById("countryBtn").innerText = t.countryBtn;
+
+/* PLATFORM */
 
 document.getElementById("accountName").innerText = t.account;
 document.getElementById("availableText").innerText = t.available;
@@ -328,106 +497,66 @@ document.getElementById("benef").placeholder = t.benef;
 document.getElementById("swift").placeholder = t.swift;
 document.getElementById("amount").placeholder = t.amount;
 document.getElementById("motif").placeholder = t.motif;
+
 document.getElementById("validateBtn").innerText = t.validate;
 
+/* CONFIRM */
+
+document.getElementById("confirmTitle").innerText = t.confirm;
+document.getElementById("correctText").innerText = t.correct;
+document.getElementById("confirmBtn").innerText = t.confirmBtn;
+
+/* LOADING */
+
+document.getElementById("loadingText").innerText = t.loading;
+
+/* FINAL */
+
+document.getElementById("finalTitle").innerText = t.finalTitle;
+document.getElementById("finalText").innerText = t.finalText;
+
 }
 
+function valider(){
 
+const t = texts[currentLang];
 
-/* VALIDATION DEMO */
+document.getElementById("cBenef").innerText = document.getElementById("benef").value;
+document.getElementById("cIban").innerText = document.getElementById("iban").value;
+document.getElementById("cSwift").innerText = document.getElementById("swift").value;
+document.getElementById("cAmount").innerText = document.getElementById("amount").value;
+document.getElementById("cCurrency").innerText = document.getElementById("currency").value;
+document.getElementById("cMotif").innerText = document.getElementById("motif").value;
 
-document.getElementById("validateBtn").onclick = function(){
+/* LABELS */
 
-const benef = document.getElementById("benef").value;
-const iban = document.getElementById("iban").value;
-const swift = document.getElementById("swift").value;
-const amount = document.getElementById("amount").value;
-const motif = document.getElementById("motif").value;
+document.getElementById("txtBenef").innerText = t.benef + " :";
+document.getElementById("txtSwift").innerText = t.swift + " :";
+document.getElementById("txtAmount").innerText = t.amount + " :";
+document.getElementById("txtCurrency").innerText = "Currency :";
+document.getElementById("txtMotif").innerText = t.motif + " :";
 
-const confirmation = `
-Bénéficiaire : ${benef}
-IBAN : ${iban}
-BIC/SWIFT : ${swift}
-Montant : ${amount}
-Motif : ${motif}
+document.getElementById("confirmBox").style.display = "flex";
 
-Ces informations sont-elles correctes ?`;
-
-const ok = confirm(confirmation);
-
-if(ok){
-
-const oldContent = document.getElementById("platform").innerHTML;
-
-document.getElementById("platform").innerHTML = `
-
-<div class="box" style="text-align:center;">
-
-<div style="
-width:70px;
-height:70px;
-border:6px solid #ddd;
-border-top:6px solid #00a651;
-border-radius:50%;
-animation:spin 1s linear infinite;
-margin:20px auto;
-"></div>
-
-<p id="loadingText">
-Vérification sécurisée de la transaction...
-</p>
-
-</div>
-
-<style>
-@keyframes spin{
-100%{
-transform:rotate(360deg);
 }
-}
-</style>
 
-`;
+function continuer(){
+
+document.getElementById("confirmBox").style.display = "none";
+
+document.getElementById("loading").style.display = "block";
 
 setTimeout(function(){
 
-document.getElementById("platform").innerHTML = `
+document.getElementById("loading").style.display = "none";
 
-<div class="box">
-
-<h2 style="
-text-align:center;
-color:#e63946;
-font-size:22px;
-margin-bottom:15px;
-">
-
-La transaction a échoué
-
-</h2>
-
-<p style="
-text-align:center;
-color:#666;
-font-size:16px;
-line-height:1.6;
-">
-
-Veuillez contacter votre directeur pour plus d’informations.
-
-</p>
-
-</div>
-
-`;
+document.getElementById("finalMessage").style.display = "block";
 
 },15000);
-
-}
 
 }
 
 </script>
 
 </body>
-</html>
+  </html>

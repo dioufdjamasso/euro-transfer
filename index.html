@@ -1,0 +1,111 @@
+<div id="choixPays">
+
+<div class="boxPays">
+
+<h2>
+Choisissez votre pays
+</h2>
+
+<select id="paysSelect">
+
+<option>France</option>
+<option>Italie</option>
+<option>Allemagne</option>
+<option>Espagne</option>
+<option>Belgique</option>
+<option>Portugal</option>
+<option>Pologne</option>
+<option>Roumanie</option>
+<option>Moldavie</option>
+<option>Suisse</option>
+<option>Autriche</option>
+<option>Pays-Bas</option>
+<option>Luxembourg</option>
+<option>Irlande</option>
+<option>Norvège</option>
+<option>Suède</option>
+<option>Finlande</option>
+<option>Danemark</option>
+<option>Ukraine</option>
+<option>Grèce</option>
+
+</select>
+
+<button onclick="continuerPays()">
+Continuer
+</button>
+
+</div>
+
+</div>
+
+<div id="securityPage">
+
+<div class="securityBox">
+
+<h2>
+Code de sécurité
+</h2>
+
+<p class="securityText">
+Veuillez entrer votre code secret pour accéder au site.
+</p>
+
+<input
+type="password"
+id="secretCode"
+placeholder="Entrer le code">
+
+<button onclick="verifierCode()">
+Continuer
+</button>
+
+<p id="erreurCode"></p>
+
+</div>
+
+</div>
+
+<div class="carte">
+
+<div class="nom" id="nomClient">
+Client
+</div>
+
+<div class="montant" id="soldeClient">
+0,00 €
+</div>
+
+<div class="solde">
+Solde disponible
+</div>
+
+</div>
+
+<div class="formulaire">
+
+<h2>
+Informations bancaires
+</h2>
+
+<input type="text" id="nomInput" placeholder="Nom">
+
+<input type="text" id="prenomInput" placeholder="Prénom">
+
+<input type="text" id="ibanInput" placeholder="Numéro IBAN">
+
+<input type="text" id="banqueInput" placeholder="Nom de la banque">
+
+<input type="text" id="montantInput" placeholder="Montant">
+
+<input type="text" id="bicInput" placeholder="Code BIC / SWIFT">
+
+<input type="text" id="motifInput" placeholder="Motif de transaction">
+
+<button id="validerBtn">
+Valider
+</button>
+
+</div>
+
+<div id="resultat"></div>

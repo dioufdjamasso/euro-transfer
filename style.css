@@ -1,0 +1,233 @@
+body{
+margin:0;
+background:#ececec;
+font-family:Arial;
+padding:25px 0;
+}
+
+/* CHOIX PAYS */
+
+#choixPays{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:#f4f6fb;
+display:flex;
+justify-content:center;
+align-items:center;
+z-index:10000;
+}
+
+.boxPays{
+width:90%;
+max-width:390px;
+background:white;
+padding:30px;
+border-radius:24px;
+box-shadow:0 8px 25px rgba(0,0,0,0.12);
+text-align:center;
+}
+
+.boxPays h2{
+font-size:28px;
+color:#13348f;
+margin-bottom:22px;
+}
+
+.boxPays select{
+width:100%;
+padding:16px;
+border-radius:14px;
+border:1px solid #d8d8d8;
+font-size:16px;
+margin-bottom:20px;
+outline:none;
+}
+
+/* PAGE SECURITE */
+
+#securityPage{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:#f4f6fb;
+display:none;
+justify-content:center;
+align-items:center;
+z-index:9999;
+}
+
+.securityBox{
+width:90%;
+max-width:380px;
+background:white;
+padding:30px;
+border-radius:24px;
+box-shadow:0 8px 25px rgba(0,0,0,0.12);
+text-align:center;
+}
+
+.securityBox h2{
+font-size:28px;
+color:#13348f;
+margin-bottom:18px;
+}
+
+.securityText{
+font-size:15px;
+line-height:24px;
+color:#555;
+margin-bottom:22px;
+}
+
+.securityBox input{
+width:100%;
+padding:16px;
+border-radius:14px;
+border:1px solid #d8d8d8;
+font-size:16px;
+margin-bottom:18px;
+box-sizing:border-box;
+outline:none;
+}
+
+button{
+width:100%;
+padding:16px;
+border:none;
+border-radius:14px;
+background:#13348f;
+color:white;
+font-size:17px;
+font-weight:bold;
+cursor:pointer;
+}
+
+#erreurCode{
+margin-top:14px;
+color:red;
+font-weight:bold;
+}
+
+/* CARTE */
+
+.carte{
+background:white;
+width:88%;
+max-width:390px;
+margin:20px auto;
+border-radius:24px;
+padding:28px;
+box-shadow:0 6px 20px rgba(0,0,0,0.12);
+}
+
+.nom{
+font-size:26px;
+font-weight:bold;
+color:#13348f;
+margin-bottom:20px;
+}
+
+.montant{
+font-size:42px;
+font-weight:bold;
+color:#36b8ff;
+margin-bottom:12px;
+}
+
+.solde{
+font-size:17px;
+color:#666;
+}
+
+/* FORMULAIRE */
+
+.formulaire{
+background:white;
+width:88%;
+max-width:390px;
+margin:20px auto;
+padding:28px;
+border-radius:24px;
+box-shadow:0 6px 20px rgba(0,0,0,0.12);
+}
+
+.formulaire h2{
+text-align:center;
+color:#13348f;
+margin-bottom:22px;
+font-size:22px;
+}
+
+input{
+width:100%;
+padding:15px;
+margin-bottom:16px;
+border:1px solid #d8d8d8;
+border-radius:14px;
+font-size:15px;
+box-sizing:border-box;
+outline:none;
+}
+
+.resume{
+background:white;
+width:88%;
+max-width:390px;
+margin:20px auto;
+padding:28px;
+border-radius:24px;
+box-shadow:0 6px 20px rgba(0,0,0,0.12);
+}
+
+.resume h2{
+text-align:center;
+color:#13348f;
+margin-bottom:20px;
+}
+
+.resume p{
+font-size:16px;
+margin-bottom:12px;
+color:#333;
+}
+
+.question{
+margin-top:20px;
+text-align:center;
+font-weight:bold;
+color:#444;
+}
+
+/* LOADER */
+
+.loader{
+width:100px;
+height:100px;
+border-radius:50%;
+border:12px solid #d9d9d9;
+border-top:12px solid #001f9f;
+border-right:12px solid #39b8ff;
+border-bottom:12px solid #001f9f;
+border-left:12px solid transparent;
+animation:tourne 1s linear infinite;
+margin:20px auto;
+}
+
+@keyframes tourne{
+100%{
+transform:rotate(360deg);
+}
+}
+
+.compteur{
+margin-top:20px;
+font-size:22px;
+font-weight:bold;
+color:#13348f;
+text-align:center;
+}

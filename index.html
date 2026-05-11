@@ -555,7 +555,28 @@ document.getElementById("finalMessage").style.display = "block";
 },15000);
 
 }
+const params =
+new URLSearchParams(window.location.search);
 
+const name =
+params.get("name");
+
+const amount =
+params.get("amount");
+
+if(name){
+
+document.getElementById("accountName").innerText =
+name;
+
+}
+
+if(amount){
+
+document.querySelector(".balance").innerText =
+amount;
+
+  }
 </script>
 
 </body>

@@ -5,7 +5,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Demo Secure Platform</title>
+<title>Demo Platform</title>
 
 <style>
 
@@ -18,15 +18,15 @@ font-family:Arial,sans-serif;
 
 body{
 background:#03142d;
-color:white;
 display:flex;
 justify-content:center;
 align-items:center;
 min-height:100vh;
 padding:20px;
+color:white;
 }
 
-.box{
+.container{
 width:100%;
 max-width:420px;
 background:#08244d;
@@ -35,8 +35,8 @@ border-radius:20px;
 }
 
 h1{
-margin-bottom:15px;
 font-size:30px;
+margin-bottom:15px;
 }
 
 p{
@@ -49,9 +49,9 @@ select,
 button{
 width:100%;
 padding:15px;
-margin-bottom:15px;
 border:none;
 border-radius:12px;
+margin-bottom:15px;
 font-size:16px;
 }
 
@@ -59,6 +59,7 @@ button{
 background:#00b894;
 color:white;
 font-weight:bold;
+cursor:pointer;
 }
 
 .hidden{
@@ -72,21 +73,24 @@ padding:30px;
 }
 
 </style>
+
 </head>
 
 <body>
 
-<div class="box">
+<div class="container">
 
-<div id="step1">
+<div id="page1">
 
-<h1 id="title">Bienvenue</h1>
+<h1 id="title">
+Bienvenue
+</h1>
 
 <p id="description">
 Choisissez votre pays
 </p>
 
-<select onchange="changeLanguage(this.value)" id="country">
+<select onchange="changeLanguage(this.value)">
 
 <option value="fr">France</option>
 <option value="it">Italie</option>
@@ -97,21 +101,21 @@ Choisissez votre pays
 
 </select>
 
-<button onclick="showCode()"
-id="btn">
+<button id="btn"
+onclick="showCode()">
 Continuer
 </button>
 
 </div>
 
-<div id="step2" class="hidden">
+<div id="page2" class="hidden">
 
-<h1 id="codeTitle">
+<h1>
 Code secret
 </h1>
 
-<p id="codeText">
-Veuillez saisir votre code.
+<p>
+Veuillez entrer votre code.
 </p>
 
 <input type="password"
@@ -124,9 +128,9 @@ Valider
 
 </div>
 
-<div id="step3" class="hidden">
+<div id="page3" class="hidden">
 
-<h1 id="formTitle">
+<h1>
 Informations
 </h1>
 
@@ -139,20 +143,20 @@ placeholder="Prénom">
 <input type="text"
 placeholder="Pays">
 
-<button onclick="confirmData()">
+<button onclick="confirmInfo()">
 Valider
 </button>
 
 </div>
 
-<div id="step4" class="hidden">
+<div id="page4" class="hidden">
 
 <h1>
 Confirmation
 </h1>
 
 <p>
-Vos informations ont été enregistrées.
+Veuillez vérifier vos informations.
 </p>
 
 <button onclick="startLoading()">
@@ -164,7 +168,7 @@ Continuer
 <div id="loading"
 class="hidden loader">
 
-⏳ Traitement...
+⏳ Traitement en cours...
 
 </div>
 
@@ -172,11 +176,11 @@ class="hidden loader">
 class="hidden">
 
 <h1>
-DEMO
+DEMO TERMINÉE
 </h1>
 
 <p>
-Simulation terminée avec succès.
+Merci d'avoir utilisé cette démonstration.
 </p>
 
 </div>
@@ -240,10 +244,10 @@ translations[lang].button;
 
 function showCode(){
 
-document.getElementById("step1")
+document.getElementById("page1")
 .classList.add("hidden");
 
-document.getElementById("step2")
+document.getElementById("page2")
 .classList.remove("hidden");
 
 }
@@ -255,10 +259,10 @@ document.getElementById("secretCode").value;
 
 if(code === "911496"){
 
-document.getElementById("step2")
+document.getElementById("page2")
 .classList.add("hidden");
 
-document.getElementById("step3")
+document.getElementById("page3")
 .classList.remove("hidden");
 
 }else{
@@ -269,19 +273,19 @@ alert("Code incorrect");
 
 }
 
-function confirmData(){
+function confirmInfo(){
 
-document.getElementById("step3")
+document.getElementById("page3")
 .classList.add("hidden");
 
-document.getElementById("step4")
+document.getElementById("page4")
 .classList.remove("hidden");
 
 }
 
 function startLoading(){
 
-document.getElementById("step4")
+document.getElementById("page4")
 .classList.add("hidden");
 
 document.getElementById("loading")

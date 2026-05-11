@@ -3,154 +3,130 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>Interface Bancaire</title>
+<title>Demo Multilingue</title>
 
 <style>
 
 *{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-    font-family:Arial,sans-serif;
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial,sans-serif;
 }
 
 body{
-    background:#f2f2f2;
+background:#eef2f7;
+padding:20px;
 }
 
-/* HAUT BLEU */
+/* BOITE */
+
+.box{
+max-width:390px;
+margin:auto;
+background:white;
+border-radius:24px;
+padding:24px;
+box-shadow:0 8px 25px rgba(0,0,0,0.08);
+}
+
+/* HAUT */
 
 .top{
-    width:100%;
-    height:180px;
-    background:#13388f;
+display:flex;
+justify-content:space-between;
+align-items:center;
 }
 
-/* CARTE */
-
-.card{
-    width:90%;
-    max-width:500px;
-    background:white;
-    margin:-80px auto 20px;
-    border-radius:20px;
-    padding:25px;
-    box-shadow:0 5px 15px rgba(0,0,0,0.1);
+.logo{
+font-size:22px;
+font-weight:bold;
+color:#173c96;
 }
 
-.account-name{
-    font-size:32px;
-    font-weight:bold;
-    color:#102f7a;
+.status{
+background:#e8f7ec;
+color:#16a34a;
+padding:6px 12px;
+border-radius:20px;
+font-size:13px;
+}
+
+/* SOLDE */
+
+.balance-title{
+margin-top:25px;
+color:#666;
+font-size:15px;
 }
 
 .balance{
-    font-size:55px;
-    color:#39cfff;
-    margin-top:20px;
-    font-weight:bold;
-}
-
-.available{
-    margin-top:15px;
-    color:#555;
-    font-size:22px;
+font-size:42px;
+font-weight:bold;
+margin-top:8px;
+color:#111;
 }
 
 /* FORMULAIRE */
 
 .form{
-    width:90%;
-    max-width:500px;
-    margin:20px auto;
+margin-top:30px;
+}
+
+input,select,button{
+
+width:100%;
+padding:14px;
+margin-bottom:15px;
+border:none;
+border-radius:14px;
+font-size:15px;
+
 }
 
 input,select{
-    width:100%;
-    padding:15px;
-    margin-bottom:15px;
-    border:none;
-    border-radius:12px;
-    background:white;
-    font-size:18px;
+background:#f3f5f9;
 }
 
 button{
-    width:100%;
-    padding:15px;
-    border:none;
-    border-radius:12px;
-    background:#13388f;
-    color:white;
-    font-size:18px;
-    font-weight:bold;
-    cursor:pointer;
+background:#173c96;
+color:white;
+font-weight:bold;
+cursor:pointer;
 }
 
-button:hover{
-    opacity:0.9;
+/* PAGES */
+
+#loginPage{
+display:none;
 }
 
-/* CONFIRMATION */
-
-#confirmBox{
-    display:none;
-    position:fixed;
-    top:0;
-    left:0;
-    width:100%;
-    height:100%;
-    background:rgba(0,0,0,0.5);
-    justify-content:center;
-    align-items:center;
-}
-
-.confirm-content{
-    width:90%;
-    max-width:400px;
-    background:white;
-    padding:25px;
-    border-radius:20px;
-}
-
-.confirm-content h2{
-    margin-bottom:20px;
+#platform{
+display:none;
 }
 
 /* LOADING */
 
 #loading{
-    display:none;
-    text-align:center;
-    margin-top:30px;
+display:none;
+text-align:center;
+margin-top:20px;
 }
 
 .spinner{
-    width:60px;
-    height:60px;
-    border:6px solid #ddd;
-    border-top:6px solid #13388f;
-    border-radius:50%;
-    animation:spin 1s linear infinite;
-    margin:20px auto;
+width:50px;
+height:50px;
+border:5px solid #ddd;
+border-top:5px solid #173c96;
+border-radius:50%;
+animation:spin 1s linear infinite;
+margin:20px auto;
 }
 
 @keyframes spin{
-
 100%{
 transform:rotate(360deg);
 }
-
-}
-
-#message{
-    display:none;
-    text-align:center;
-    color:red;
-    font-size:20px;
-    margin-top:20px;
-    font-weight:bold;
 }
 
 </style>
@@ -158,136 +134,112 @@ transform:rotate(360deg);
 
 <body>
 
-<!-- BARRE BLEUE -->
+<!-- CHOIX PAYS -->
 
-<div class="top"></div>
+<div class="box" id="countryPage">
 
-<!-- SURFACE PRINCIPALE -->
-
-<div class="card">
-
-    <div class="account-name" id="name">
-        Conto Mediolanum
-    </div>
-
-    <div class="balance" id="money">
-        45.473,92 €
-    </div>
-
-    <div class="available">
-        Solde disponible
-    </div>
-
-</div>
-
-<!-- MODIFICATION -->
-
-<div class="form">
-
-    <input type="text"
-    id="newName"
-    placeholder="Modifier le nom">
-
-    <input type="text"
-    id="newMoney"
-    placeholder="Modifier le montant">
-
-    <button onclick="modifier()">
-        MODIFIER
-    </button>
-
-</div>
-
-<!-- INFORMATIONS -->
-
-<div class="form">
-
-    <input type="text"
-    id="benef"
-    placeholder="Nom du bénéficiaire">
-
-    <input type="text"
-    id="iban"
-    placeholder="IBAN">
-
-    <input type="text"
-    id="swift"
-    placeholder="Code BIC / SWIFT">
-
-    <input type="number"
-    id="amount"
-    placeholder="Montant">
-
-    <select id="currency">
-
-        <option>EUR</option>
-        <option>USD</option>
-        <option>XOF</option>
-
-    </select>
-
-    <input type="text"
-    id="motif"
-    placeholder="Motif du virement">
-
-    <button onclick="valider()">
-        VALIDER
-    </button>
-
-</div>
-
-<!-- CONFIRMATION -->
-
-<div id="confirmBox">
-
-<div class="confirm-content">
-
-<h2>Confirmation</h2>
-
-<p>
-<b>Bénéficiaire :</b>
-<span id="cBenef"></span>
-</p>
+<h2 id="chooseText">
+Choisissez votre pays
+</h2>
 
 <br>
 
-<p>
-<b>IBAN :</b>
-<span id="cIban"></span>
-</p>
+<select id="country">
 
-<br>
+<option value="fr">France</option>
+<option value="it">Italie</option>
+<option value="de">Allemagne</option>
+<option value="es">Espagne</option>
+<option value="ro">Roumanie</option>
+<option value="gr">Grèce</option>
+<option value="md">Moldavie</option>
 
-<p>
-<b>BIC/SWIFT :</b>
-<span id="cSwift"></span>
-</p>
+</select>
 
-<br>
-
-<p>
-<b>Montant :</b>
-<span id="cAmount"></span>
-</p>
-
-<br>
-
-<p>
-<b>Devise :</b>
-<span id="cCurrency"></span>
-</p>
-
-<br>
-
-<p>
-<b>Motif :</b>
-<span id="cMotif"></span>
-</p>
-
-<br>
-
-<button onclick="continuer()">
+<button onclick="continuerPays()" id="continueBtn">
 CONTINUER
+</button>
+
+</div>
+
+<!-- PAGE CODE DEMO -->
+
+<div class="box" id="loginPage">
+
+<h2 id="pinTitle">
+Code démo
+</h2>
+
+<br>
+
+<input type="password"
+id="pinInput"
+placeholder="Entrez le code démo">
+
+<button onclick="verifierPin()" id="validateBtn">
+VALIDER
+</button>
+
+</div>
+
+<!-- TABLEAU -->
+
+<div class="box" id="platform">
+
+<div class="top">
+
+<div class="logo" id="name">
+Compte Premium
+</div>
+
+<div class="status" id="statusText">
+Actif
+</div>
+
+</div>
+
+<div class="balance-title" id="balanceText">
+Solde disponible
+</div>
+
+<div class="balance" id="money">
+45.473,92 €
+</div>
+
+<!-- FORMULAIRE -->
+
+<div class="form">
+
+<input type="text"
+id="benef"
+placeholder="Nom du bénéficiaire">
+
+<input type="text"
+id="iban"
+placeholder="IBAN">
+
+<input type="text"
+id="swift"
+placeholder="Code BIC / SWIFT">
+
+<input type="number"
+id="amount"
+placeholder="Montant">
+
+<select id="currency">
+
+<option>EUR</option>
+<option>USD</option>
+<option>XOF</option>
+
+</select>
+
+<input type="text"
+id="motif"
+placeholder="Motif du virement">
+
+<button onclick="valider()" id="validateTransfer">
+VALIDER
 </button>
 
 </div>
@@ -300,93 +252,213 @@ CONTINUER
 
 <div class="spinner"></div>
 
-<p>
-Traitement du virement...
+<p id="loadingText">
+Traitement...
 </p>
-
-</div>
-
-<div id="message">
-
-Transaction non finalisée.
-Veuillez réessayer plus tard.
 
 </div>
 
 <script>
 
-/* MODIFIER NOM ET SOLDE */
+/* MODIFIER PAR LE LIEN */
 
-function modifier(){
+const params =
+new URLSearchParams(window.location.search);
 
-let nom =
-document.getElementById("newName").value;
+const nom =
+params.get("nom");
 
-let montant =
-document.getElementById("newMoney").value;
+const solde =
+params.get("solde");
 
-if(nom !== ""){
+if(nom){
 
 document.getElementById("name").innerText =
 nom;
 
 }
 
-if(montant !== ""){
+if(solde){
 
 document.getElementById("money").innerText =
-montant;
+solde;
+
+}
+
+/* LANGUES */
+
+let lang = "fr";
+
+const texts = {
+
+fr:{
+choose:"Choisissez votre pays",
+continue:"CONTINUER",
+pin:"Code démo",
+placeholder:"Entrez le code démo",
+validate:"VALIDER",
+platform:"Compte Premium",
+balance:"Solde disponible",
+status:"Actif",
+loading:"Traitement...",
+success:"Démo terminée"
+},
+
+it:{
+choose:"Scegli il tuo paese",
+continue:"CONTINUA",
+pin:"Codice demo",
+placeholder:"Inserisci il codice demo",
+validate:"CONFERMA",
+platform:"Conto Premium",
+balance:"Saldo disponibile",
+status:"Attivo",
+loading:"Elaborazione...",
+success:"Demo completata"
+},
+
+de:{
+choose:"Wählen Sie Ihr Land",
+continue:"WEITER",
+pin:"Demo-Code",
+placeholder:"Demo-Code eingeben",
+validate:"BESTÄTIGEN",
+platform:"Premium Konto",
+balance:"Verfügbarer Kontostand",
+status:"Aktiv",
+loading:"Verarbeitung...",
+success:"Demo abgeschlossen"
+},
+
+es:{
+choose:"Seleccione su país",
+continue:"CONTINUAR",
+pin:"Código demo",
+placeholder:"Ingrese el código demo",
+validate:"VALIDAR",
+platform:"Cuenta Premium",
+balance:"Saldo disponible",
+status:"Activo",
+loading:"Procesando...",
+success:"Demostración terminada"
+},
+
+ro:{
+choose:"Alegeți țara",
+continue:"CONTINUĂ",
+pin:"Cod demo",
+placeholder:"Introduceți codul demo",
+validate:"VALIDARE",
+platform:"Cont Premium",
+balance:"Sold disponibil",
+status:"Activ",
+loading:"Procesare...",
+success:"Demo finalizată"
+},
+
+gr:{
+choose:"Επιλέξτε τη χώρα σας",
+continue:"ΣΥΝΕΧΕΙΑ",
+pin:"Κωδικός demo",
+placeholder:"Εισαγάγετε demo κωδικό",
+validate:"ΕΠΙΒΕΒΑΙΩΣΗ",
+platform:"Premium Λογαριασμός",
+balance:"Διαθέσιμο υπόλοιπο",
+status:"Ενεργό",
+loading:"Επεξεργασία...",
+success:"Η δοκιμή ολοκληρώθηκε"
+},
+
+md:{
+choose:"Alegeți țara",
+continue:"CONTINUĂ",
+pin:"Cod demo",
+placeholder:"Introduceți codul demo",
+validate:"VALIDARE",
+platform:"Cont Premium",
+balance:"Sold disponibil",
+status:"Activ",
+loading:"Procesare...",
+success:"Demo finalizată"
+}
+
+};
+
+/* CHOIX PAYS */
+
+function continuerPays(){
+
+lang =
+document.getElementById("country").value;
+
+document.getElementById("countryPage").style.display =
+"none";
+
+document.getElementById("loginPage").style.display =
+"block";
+
+document.getElementById("pinTitle").innerText =
+texts[lang].pin;
+
+document.getElementById("pinInput").placeholder =
+texts[lang].placeholder;
+
+document.getElementById("validateBtn").innerText =
+texts[lang].validate;
+
+}
+
+/* CODE DEMO */
+
+function verifierPin(){
+
+const code =
+document.getElementById("pinInput").value;
+
+if(code === "123456"){
+
+document.getElementById("loginPage").style.display =
+"none";
+
+document.getElementById("platform").style.display =
+"block";
+
+document.getElementById("name").innerText =
+texts[lang].platform;
+
+document.getElementById("balanceText").innerText =
+texts[lang].balance;
+
+document.getElementById("statusText").innerText =
+texts[lang].status;
+
+}else{
+
+alert("Code incorrect");
 
 }
 
 }
 
-/* VALIDATION */
+/* VALIDER */
 
 function valider(){
 
-document.getElementById("cBenef").innerText =
-document.getElementById("benef").value;
-
-document.getElementById("cIban").innerText =
-document.getElementById("iban").value;
-
-document.getElementById("cSwift").innerText =
-document.getElementById("swift").value;
-
-document.getElementById("cAmount").innerText =
-document.getElementById("amount").value;
-
-document.getElementById("cCurrency").innerText =
-document.getElementById("currency").value;
-
-document.getElementById("cMotif").innerText =
-document.getElementById("motif").value;
-
-document.getElementById("confirmBox").style.display =
-"flex";
-
-}
-
-/* CONTINUER */
-
-function continuer(){
-
-document.getElementById("confirmBox").style.display =
+document.getElementById("platform").style.display =
 "none";
 
 document.getElementById("loading").style.display =
 "block";
+
+document.getElementById("loadingText").innerText =
+texts[lang].loading;
 
 setTimeout(function(){
 
-document.getElementById("loading").style.display =
-"none";
+document.getElementById("loadingText").innerText =
+texts[lang].success;
 
-document.getElementById("message").style.display =
-"block";
-
-},15000);
+},5000);
 
 }
 

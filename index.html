@@ -1,77 +1,64 @@
 <!DOCTYPE html><html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Simulation bancaire</title>
-  <style>
-    body { font-family: Arial, sans-serif; background:#f1f5f9; display:flex; justify-content:center; align-items:center; min-height:100vh; margin:0; }
-    .card { width:360px; background:#fff; border-radius:24px; padding:20px; box-shadow:0 10px 30px rgba(0,0,0,.15); }
-    .header { background:linear-gradient(90deg,#1d4ed8,#22d3ee); color:white; padding:18px; border-radius:18px; }
-    h2 { margin:0 0 12px; font-size:20px; }
-    input, button { width:100%; padding:12px; margin:6px 0; border-radius:12px; border:1px solid #ddd; box-sizing:border-box; }
-    button { background:#1d4ed8; color:white; border:none; cursor:pointer; }
-    button:hover { opacity:.95; }
-    .hidden { display:none; }
-    .center { text-align:center; }
-    .error { color:#dc2626; font-weight:bold; }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Simulation financière</title>
+<style>
+body{margin:0;font-family:Arial,sans-serif;background:#e8e4d6;display:flex;justify-content:center;align-items:center;min-height:100vh}
+.phone{width:390px;min-height:780px;background:#fff;border:4px solid #111;border-radius:40px;padding:20px;box-sizing:border-box;box-shadow:0 20px 40px rgba(0,0,0,.2)}
+.card{background:linear-gradient(90deg,#0d6efd,#12b8ff);color:#fff;padding:22px;border-radius:20px;margin:20px 0}
+.balance{font-size:34px;font-weight:bold;margin-top:10px}
+input,select,button{width:100%;padding:14px;margin:8px 0;border-radius:14px;border:1px solid #ddd;box-sizing:border-box;font-size:16px}
+button{background:linear-gradient(90deg,#ff8a00,#ffc107);border:none;color:#fff;font-weight:bold}
+.hidden{display:none}.center{text-align:center}.error{color:#dc2626;font-weight:bold}
+</style>
 </head>
 <body>
-  <div class="card">
-    <div class="header">
-      <div style="font-size:12px;opacity:.8">Carte virtuelle</div>
-      <div style="font-size:24px;font-weight:bold;margin-top:20px">BFOR BANK</div>
-    </div><div id="security">
-  <h2 id="txtSecurity">Code de sécurité</h2>
-  <input id="code" placeholder="911496">
-  <button onclick="checkCode()">OK</button>
+<div class="phone">
+  <div id="security">
+    <h2 id="txtSecurity">Code de sécurité</h2>
+    <input id="code" type="password" placeholder="••••••">
+    <button onclick="checkCode()">OK</button>
+  </div>  <div id="country" class="hidden">
+    <h2 id="txtCountry">Choisissez votre pays</h2>
+    <button onclick="setLang('ro')">Moldavie</button>
+    <button onclick="setLang('fr')">France</button>
+    <button onclick="setLang('it')">Italie</button>
+    <button onclick="setLang('de')">Allemagne</button>
+    <button onclick="setLang('pt')">Portugal</button>
+    <button onclick="setLang('ro')">Roumanie</button>
+  </div>  <div id="form" class="hidden">
+    <div class="card">
+      <div id="txtCard">Compte / Portefeuille</div>
+      <div class="balance">€ 12 450.00</div>
+    </div>
+    <h2 id="txtTitle">Simulation financière</h2>
+    <input id="name" placeholder="Nom du bénéficiaire">
+    <input id="account" placeholder="IBAN">
+    <input id="ref" placeholder="Code BIC/SWIFT">
+    <input id="amount" placeholder="Montant">
+    <select id="currency"><option>EUR</option><option>USD</option><option>RON</option></select>
+    <input id="reason" placeholder="Motif du virement">
+    <button id="btnSend" onclick="showConfirm()">Valider</button>
+  </div>  <div id="confirm" class="hidden">
+    <h2 id="txtConfirm">Vérification</h2>
+    <div id="summary"></div>
+    <p id="txtAsk">Ces informations sont-elles correctes ?</p>
+    <button onclick="startProcess()" id="btnYes">Oui</button>
+  </div>  <div id="processing" class="hidden center">
+    <h2 id="txtProcessing">Traitement en cours...</h2>
+    <p><span id="count">15</span>s</p>
+  </div>  <div id="done" class="hidden center error">
+    <p id="txtDone">Échec de la transaction — simulation, aucune opération réelle effectuée.</p>
+  </div>
 </div>
-
-<div id="country" class="hidden">
-  <h2 id="txtCountry">Choisissez votre pays</h2>
-  <button onclick="setLang('ro')">Moldavie</button>
-  <button onclick="setLang('fr')">France</button>
-  <button onclick="setLang('it')">Italie</button>
-  <button onclick="setLang('de')">Allemagne</button>
-  <button onclick="setLang('pt')">Portugal</button>
-  <button onclick="setLang('ro')">Roumanie</button>
-</div>
-
-<div id="form" class="hidden">
-  <h2 id="txtTitle">Simulation de virement</h2>
-  <input id="name" placeholder="Nom">
-  <input id="iban" placeholder="IBAN">
-  <input id="amount" placeholder="Montant">
-  <button onclick="startProcess()" id="btnSend">Envoyer</button>
-</div>
-
-<div id="processing" class="hidden center">
-  <p id="txtProcessing">Traitement de la simulation...</p>
-  <p><span id="count">18</span>s</p>
-</div>
-
-<div id="done" class="hidden center error">
-  <p id="txtDone">Impossible de finaliser la simulation</p>
-</div>
-
-  </div><script>
-const translations = {
-  fr:{security:'Code de sécurité',country:'Choisissez votre pays',title:'Simulation de virement',send:'Envoyer',processing:'Traitement de la simulation...',done:'Impossible de finaliser la simulation'},
-  en:{security:'Security code',country:'Choose your country',title:'Transfer simulation',send:'Send',processing:'Processing simulation...',done:'Unable to complete simulation'},
-  de:{security:'Sicherheitscode',country:'Land auswählen',title:'Überweisungssimulation',send:'Senden',processing:'Simulation läuft...',done:'Simulation konnte nicht abgeschlossen werden'},
-  it:{security:'Codice di sicurezza',country:'Scegli il tuo paese',title:'Simulazione bonifico',send:'Invia',processing:'Elaborazione simulazione...',done:'Impossibile completare la simulazione'},
-  pt:{security:'Código de segurança',country:'Escolha seu país',title:'Simulação de transferência',send:'Enviar',processing:'Processando simulação...',done:'Não foi possível concluir a simulação'},
-  ro:{security:'Cod de securitate',country:'Alegeți țara',title:'Simulare transfer',send:'Trimite',processing:'Procesare simulare...',done:'Simularea nu a putut fi finalizată'}
-};
-let lang='fr';
-function show(id){ ['security','country','form','processing','done'].forEach(x=>document.getElementById(x).classList.add('hidden')); document.getElementById(id).classList.remove('hidden'); }
-function checkCode(){ if(document.getElementById('code').value==='911496') show('country'); }
-function setLang(l){ lang=l; const t=translations[l];
-  document.documentElement.lang=l;
-  txtSecurity.textContent=t.security; txtCountry.textContent=t.country; txtTitle.textContent=t.title;
-  btnSend.textContent=t.send; txtProcessing.textContent=t.processing; txtDone.textContent=t.done;
-  show('form');
-}
-function startProcess(){ show('processing'); let c=18; count.textContent=c; const i=setInterval(()=>{ c--; count.textContent=c; if(c<=0){ clearInterval(i); show('done'); } },1000); }
-</script></body>
+<script>
+const t={fr:{security:'Code de sécurité',country:'Choisissez votre pays',title:'Simulation financière',card:'Compte / Portefeuille',confirm:'Vérification',ask:'Ces informations sont-elles correctes ?',yes:'Oui',processing:'Traitement en cours...',done:'Échec de la transaction — simulation, aucune opération réelle effectuée.',send:'Valider'},en:{security:'Security code',country:'Choose your country',title:'Financial simulation',card:'Account / Wallet',confirm:'Verification',ask:'Are these details correct?',yes:'Yes',processing:'Processing...',done:'Transaction failed — simulation, no real operation performed.',send:'Validate'},de:{security:'Sicherheitscode',country:'Land auswählen',title:'Finanzsimulation',card:'Konto / Wallet',confirm:'Prüfung',ask:'Sind diese Angaben korrekt?',yes:'Ja',processing:'Verarbeitung...',done:'Transaktion fehlgeschlagen — Simulation.',send:'Bestätigen'},it:{security:'Codice di sicurezza',country:'Scegli il tuo paese',title:'Simulazione finanziaria',card:'Conto / Portafoglio',confirm:'Verifica',ask:'Queste informazioni sono corrette?',yes:'Sì',processing:'Elaborazione...',done:'Transazione non riuscita — simulazione.',send:'Conferma'},pt:{security:'Código de segurança',country:'Escolha seu país',title:'Simulação financeira',card:'Conta / Carteira',confirm:'Verificação',ask:'Essas informações estão corretas?',yes:'Sim',processing:'Processando...',done:'Falha na transação — simulação.',send:'Validar'},ro:{security:'Cod de securitate',country:'Alegeți țara',title:'Simulare financiară',card:'Cont / Portofel',confirm:'Verificare',ask:'Sunt aceste informații corecte?',yes:'Da',processing:'Procesare...',done:'Tranzacție eșuată — simulare.',send:'Validează'}};
+function show(id){['security','country','form','confirm','processing','done'].forEach(x=>document.getElementById(x).classList.add('hidden'));document.getElementById(id).classList.remove('hidden')}
+function checkCode(){if(code.value)show('country')}
+function setLang(l){const x=t[l]; document.documentElement.lang=l; txtSecurity.textContent=x.security; txtCountry.textContent=x.country; txtTitle.textContent=x.title; txtCard.textContent=x.card; txtConfirm.textContent=x.confirm; txtAsk.textContent=x.ask; btnYes.textContent=x.yes; txtProcessing.textContent=x.processing; txtDone.textContent=x.done; btnSend.textContent=x.send; show('form')}
+function showConfirm(){summary.innerHTML=`<p><b>${name.value}</b></p><p>${account.value}</p><p>${ref.value}</p><p>${amount.value} ${currency.value}</p><p>${reason.value}</p>`;show('confirm')}
+function startProcess(){show('processing');let c=15;count.textContent=c;const i=setInterval(()=>{c--;count.textContent=c;if(c<=0){clearInterval(i);show('done')}},1000)}
+</script>
+</body>
 </html>

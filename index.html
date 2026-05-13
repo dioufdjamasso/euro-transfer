@@ -37,19 +37,34 @@ button:hover{transform:translateY(-1px)}
     <button onclick="setLang('de')">🇩🇪 Allemagne</button>
     <button onclick="setLang('pt')">🇵🇹 Portugal</button>
     <button onclick="setLang('ro')">🇷🇴 Roumanie</button>
-  </div>  <div id="form">
+  </div>  
     <div class="card">
   <div class="balance-label" id="txtAvailable">Montant disponible</div>
   <div class="balance">€ 12 450.00</div>
   <button onclick="showForm()">RETIRER (DÉMO)</button>
-    </div>
+    </div> <div id="form" class="hidden">
     <div class="section-title" id="txtTitle">Simulation financière</div>
-    <input id="name">
-    <input id="account">
-    <input id="ref">
-    <input id="amount">
-    <select id="currency"><option>EUR</option><option>USD</option><option>RON</option></select>
-    <input id="reason">
+    <label>Nom du bénéficiaire (demo)</label>
+<input id="name">
+
+<label>IBAN (demo)</label>
+<input id="account">
+
+<label>Code BIC/SWIFT (demo)</label>
+<input id="ref">
+
+<label>Montant (demo)</label>
+<input id="amount">
+
+<label>Devise (demo)</label>
+<select id="currency">
+  <option>EUR</option>
+  <option>USD</option>
+  <option>RON</option>
+</select>
+
+<label>Motif du virement (demo)</label>
+<input id="reason">
     <button id="btnSend" onclick="showConfirm()">Valider</button>
   </div>  <div id="confirm" class="hidden">
     <div class="section-title" id="txtConfirm">Vérification</div>

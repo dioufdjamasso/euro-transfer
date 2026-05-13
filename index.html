@@ -37,7 +37,7 @@ button:hover{transform:translateY(-1px)}
     <button onclick="setLang('de')">🇩🇪 Allemagne</button>
     <button onclick="setLang('pt')">🇵🇹 Portugal</button>
     <button onclick="setLang('ro')">🇷🇴 Roumanie</button>
-  </div>  <div id="form" class="hidden">
+  </div>  <div id="form">
     <div class="card">
   <div class="balance-label" id="txtAvailable">Montant disponible</div>
   <div class="balance">€ 12 450.00</div>
@@ -76,8 +76,9 @@ function setLang(l){const x=t[l];document.documentElement.lang=l;txtSecurity.tex
 function showConfirm(){summary.innerHTML=`<p><b>${name.value}</b></p><p>${account.value}</p><p>${ref.value}</p><p>${amount.value} ${currency.value}</p><p>${reason.value}</p>`;show('confirm')}
 function startProcess(){show('simcode')}
 function checkSimCode(){ if(simCode.value==='636333'){ show('processing'); let c=15; count.textContent=c; const i=setInterval(()=>{c--; count.textContent=c; if(c<=0){ clearInterval(i); show('done')}},1000); }}
-</script>function showForm() {
+function showForm() {
   document.getElementById('form').classList.remove('hidden');
 }
+</script>
 </body>
 </html>

@@ -1,124 +1,143 @@
-<!DOCTYPE html><html lang="fr">
+<!DOCTYPE html>
+<html lang="fr">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Simulation financière</title>
-<style>
-*{box-sizing:border-box} body{margin:0;font-family:Arial,sans-serif;background:linear-gradient(135deg,#eef2ff,#f8fafc);display:flex;justify-content:center;align-items:center;min-height:100vh;padding:20px}
-.app{width:420px;background:#fff;border-radius:28px;padding:28px;box-shadow:0 25px 60px rgba(0,0,0,.15)}
-.header{font-size:28px;font-weight:700;color:#0f172a;text-align:center;margin-bottom:18px}
-.card{background:linear-gradient(135deg,#1d4ed8,#38bdf8);color:#fff;padding:28px;border-radius:24px;margin:20px 0;box-shadow:0 14px 30px rgba(29,78,216,.25)}
-.balance-label{font-size:18px;opacity:.95;font-weight:600}
-.balance{font-size:42px;font-weight:800;margin-top:12px;letter-spacing:.5px}
-.section-title{font-size:22px;font-weight:700;color:#0f172a;margin:12px 0}
-input,select,button{width:100%;padding:16px;margin:8px 0;border-radius:16px;border:1px solid #dbe2ea;font-size:16px;transition:.2s}
-input:focus,select:focus{outline:none;border-color:#3b82f6;box-shadow:0 0 0 4px rgba(59,130,246,.12)}
-button{background:linear-gradient(90deg,#2563eb,#06b6d4);border:none;color:#fff;font-weight:700;cursor:pointer;box-shadow:0 8px 18px rgba(37,99,235,.25)}
-button:hover{transform:translateY(-1px)}
-.hidden{display:none}.center{text-align:center}.error{color:#dc2626;font-weight:700;font-size:20px;line-height:1.4}
-.summary{background:#f8fafc;border-radius:18px;padding:16px;color:#334155}
-.spinner{width:110px;height:110px;border:12px solid #dbeafe;border-top:12px solid #2563eb;border-radius:50%;animation:spin 1s linear infinite;margin:24px auto}
-@keyframes spin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
-.small{color:#64748b;font-size:14px;text-align:center;margin-top:8px}
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Prototype bancaire (Démo)</title>
+  <style>
+    body{
+      font-family: Arial, sans-serif;
+      background:#eef3f7;
+      padding:20px;
+      margin:0;
+    }
+    .container{
+      max-width:420px;
+      margin:auto;
+    }
+    .card{
+      background:white;
+      border-radius:24px;
+      padding:24px;
+      box-shadow:0 4px 16px rgba(0,0,0,.08);
+      margin-bottom:20px;
+    }
+    h1{ font-size:42px; margin:0 0 20px; }
+    .big{ font-size:54px; font-weight:bold; }
+    button{
+      width:100%;
+      padding:16px;
+      border:none;
+      border-radius:18px;
+      font-size:20px;
+      margin-top:10px;
+      cursor:pointer;
+    }
+    .blue{ background:#0a84ff; color:white; }
+    .green{ background:#16a34a; color:white; }
+    input{
+      width:100%;
+      padding:14px;
+      margin:7px 0;
+      border:1px solid #ccc;
+      border-radius:14px;
+      box-sizing:border-box;
+      font-size:16px;
+    }
+    #login, #form { display:none; }
+    #msg { color:red; font-weight:bold; text-align:center; }
+    #timer { color:#0a84ff; font-weight:bold; text-align:center; }
+    .note{
+      text-align:center;
+      color:#666;
+      font-size:12px;
+      margin-top:8px;
+    }
+  </style>
 </head>
 <body>
-<div class="app">
-  <div class="header">Finance App</div>  <div id="security">
-    <div class="section-title" id="txtSecurity">Code de sécurité</div>
-    <input id="code" type="password" placeholder="••••••">
-    <button onclick="checkCode()">OK</button>
-    <div class="small">Accès sécurisé</div>
-  </div>  <div id="country" class="hidden">
-    <div class="section-title" id="txtCountry">Choisissez votre pays</div>
-    <button onclick="setLang('ro')">🇲🇩 Moldavie</button>
-    <button onclick="setLang('fr')">🇫🇷 France</button>
-    <button onclick="setLang('it')">🇮🇹 Italie</button>
-    <button onclick="setLang('de')">🇩🇪 Allemagne</button>
-    <button onclick="setLang('pt')">🇵🇹 Portugal</button>
-    <button onclick="setLang('ro')">🇷🇴 Roumanie</button>
-  </div>  
+
+<div class="container">
+  <h1>Girokonto</h1>
+
+  <div id="home">
     <div class="card">
-  <div class="balance-label" id="txtAvailable">Montant disponible</div>
-  <div class="balance">€ 12 450.00</div>
-  <button onclick="showForm()">RETIRER (DÉMO)</button>
-    </div> <<div id="form" class="hidden"> class="hidden">
-    <div class="section-title" id="txtTitle">Simulation financière</div>
-    <label>Nom du bénéficiaire (demo)</label>
-<input id="name">
+      <p>IBAN</p>
+      <h2>DE00 1203 0000 1234 5678 90</h2>
 
-<label>IBAN (demo)</label>
-<input id="account">
+      <p>Aktueller Kontostand</p>
+      <div class="big">3.178,00 €</div>
 
-<label>Code BIC/SWIFT (demo)</label>
-<input id="ref">
+      <button class="blue" onclick="openLogin()">Retiré</button>
+      <div class="note">Prototype / Démonstration</div>
+    </div>
+  </div>
 
-<label>Montant (demo)</label>
-<input id="amount">
+  <div id="login" class="card">
+    <h2>Connexion (démo)</h2>
+    <input id="code" placeholder="Code démo : demo123">
+    <div id="loginMsg"></div>
+    <button class="blue" onclick="checkCode()">Entrer</button>
+    <button onclick="goHome()">Retour</button>
+  </div>
 
-<label>Devise (demo)</label>
-<select id="currency">
-  <option>EUR</option>
-  <option>USD</option>
-  <option>RON</option>
-</select>
+  <div id="form" class="card">
+    <h2>Formulaire de retrait</h2>
+    <input placeholder="Nom">
+    <input placeholder="Prénom">
+    <input id="amount" placeholder="Montant (modifiable)">
+    <input placeholder="IBAN">
+    <input placeholder="BIC">
+    <input placeholder="Swift">
+    <input placeholder="Nom de banque">
 
-<label>Motif du virement (demo)</label>
-<input id="reason">
-    <button id="btnSend" onclick="showConfirm()">Valider</button>
-  </div>  <div id="confirm" class="hidden">
-    <div class="section-title" id="txtConfirm">Vérification</div>
-    <div id="summary" class="summary"></div>
-    <p id="txtAsk">Ces informations sont-elles correctes ?</p>
-    <button onclick="startProcess()" id="btnYes">Oui</button>
-  </div>  <div id="simcode" class="hidden">
-    <div class="section-title" id="txtSimCode">Entrez le code de simulation de validation</div>
-    <input id="simCode" type="password" placeholder="••••••">
-    <button onclick="checkSimCode()">OK</button>
-  </div>  <div id="processing" class="hidden center">
-    <div class="spinner"></div>
-    <div class="section-title" id="txtProcessing">Traitement en cours...</div>
-    <p><span id="count">15</span>s</p>
-  </div>  <div id="done" class="hidden center error">
-    <p id="txtDone">Veuillez contacter votre directeur. Aucune opération réelle effectuée.</p>
+    <div id="timer"></div>
+    <div id="msg"></div>
+
+    <button class="green" onclick="startTimer()">Valider</button>
+    <button class="blue" onclick="goHome()">Retour</button>
   </div>
 </div>
+
 <script>
-const t={fr:{security:'Code de sécurité',country:'Choisissez votre pays',title:'Simulation financière',available:'Montant disponible',name:'Nom du bénéficiaire',iban:'IBAN',bic:'Code BIC/SWIFT',amount:'Montant',reason:'Motif du virement',confirm:'Vérification',ask:'Ces informations sont-elles correctes ?',yes:'Oui',processing:'Traitement en cours...',done:'Veuillez contacter votre directeur. Aucune opération réelle effectuée.',send:'Valider'},en:{security:'Security code',country:'Choose your country',title:'Financial simulation',available:'Available amount',name:'Beneficiary name',iban:'IBAN',bic:'BIC/SWIFT code',amount:'Amount',reason:'Transfer reason',confirm:'Verification',ask:'Are these details correct?',yes:'Yes',processing:'Processing...',done:'Please contact your manager. No real operation performed.',send:'Validate'},de:{security:'Sicherheitscode',country:'Land auswählen',title:'Finanzsimulation',available:'Verfügbarer Betrag',name:'Begünstigter',iban:'IBAN',bic:'BIC/SWIFT-Code',amount:'Betrag',reason:'Überweisungsgrund',confirm:'Prüfung',ask:'Sind diese Angaben korrekt?',yes:'Ja',processing:'Verarbeitung...',done:'Bitte kontaktieren Sie Ihren Manager. Keine echte Operation durchgeführt.',send:'Bestätigen'},it:{security:'Codice di sicurezza',country:'Scegli il tuo paese',title:'Simulazione finanziaria',available:'Importo disponibile',name:'Nome beneficiario',iban:'IBAN',bic:'Codice BIC/SWIFT',amount:'Importo',reason:'Motivo del bonifico',confirm:'Verifica',ask:'Queste informazioni sono corrette?',yes:'Sì',processing:'Elaborazione...',done:'Contatta il tuo responsabile. Nessuna operazione reale effettuata.',send:'Conferma'},pt:{security:'Código de segurança',country:'Escolha seu país',title:'Simulação financeira',available:'Valor disponível',name:'Nome do beneficiário',iban:'IBAN',bic:'Código BIC/SWIFT',amount:'Valor',reason:'Motivo da transferência',confirm:'Verificação',ask:'Essas informações estão corretas?',yes:'Sim',processing:'Processando...',done:'Entre em contato com seu gerente. Nenhuma operação real efetuada.',send:'Validar'},ro:{security:'Cod de securitate',country:'Alegeți țara',title:'Simulare financiară',available:'Sumă disponibilă',name:'Nume beneficiar',iban:'IBAN',bic:'Cod BIC/SWIFT',amount:'Sumă',reason:'Motiv transfer',confirm:'Verificare',ask:'Sunt aceste informații corecte?',yes:'Da',processing:'Procesare...',done:'Vă rugăm să contactați directorul. Nicio operațiune reală efectuată.',send:'Validează'}};
-function show(id){['security','country','form','confirm','simcode','processing','done'].forEach(x=>document.getElementById(x).classList.add('hidden'));document.getElementById(id).classList.remove('hidden')}
-function checkCode(){if(code.value)show('country')}
-function setLang(l){
-  const x=t[l];
-  document.documentElement.lang=l;
-
-  txtSecurity.textContent=x.security;
-  txtCountry.textContent=x.country;
-  txtTitle.textContent=x.title;
-  txtAvailable.textContent=x.available;
-
-  name.placeholder=x.name;
-  account.placeholder=x.iban;
-  ref.placeholder=x.bic;
-  amount.placeholder=x.amount;
-  reason.placeholder=x.reason;
-
-  txtConfirm.textContent=x.confirm;
-  txtAsk.textContent=x.ask;
-  btnYes.textContent=x.yes;
-  txtProcessing.textContent=x.processing;
-  txtDone.textContent=x.done;
-  btnSend.textContent=x.send;
-
-  document.getElementById('security').classList.add('hidden');
-  document.getElementById('country').classList.add('hidden');
-  document.getElementById('form').classList.remove('hidden');
+function openLogin(){
+  document.getElementById('home').style.display='none';
+  document.getElementById('login').style.display='block';
 }
-function showConfirm(){summary.innerHTML=`<p><b>${name.value}</b></p><p>${account.value}</p><p>${ref.value}</p><p>${amount.value} ${currency.value}</p><p>${reason.value}</p>`;show('confirm')}
-function startProcess(){show('simcode')}
-function checkSimCode(){ if(simCode.value==='636333'){ show('processing'); let c=15; count.textContent=c; const i=setInterval(()=>{c--; count.textContent=c; if(c<=0){ clearInterval(i); show('done')}},1000); }}
-function showForm() {
-  document.getElementById('form').classList.remove('hidden');
+
+function checkCode(){
+  const code = document.getElementById('code').value;
+  if(code === 'demo123'){
+    document.getElementById('login').style.display='none';
+    document.getElementById('form').style.display='block';
+  } else {
+    document.getElementById('loginMsg').innerText='Code incorrect';
+    document.getElementById('loginMsg').style.color='red';
+  }
+}
+
+function goHome(){
+  document.getElementById('home').style.display='block';
+  document.getElementById('login').style.display='none';
+  document.getElementById('form').style.display='none';
+  document.getElementById('timer').innerText='';
+  document.getElementById('msg').innerText='';
+}
+
+function startTimer(){
+  let s = 20;
+  document.getElementById('msg').innerText='';
+  let t = setInterval(()=>{
+    document.getElementById('timer').innerText='⏳ Traitement... ' + s + 's';
+    s--;
+    if(s < 0){
+      clearInterval(t);
+      document.getElementById('timer').innerText='';
+      document.getElementById('msg').innerText='Transaction impossible';
+    }
+  },1000);
 }
 </script>
+
 </body>
 </html>

@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Prototype Fintech Premium</title>
+<title>Version de test</title>
 <style>
 *{box-sizing:border-box}
 body{
@@ -13,28 +13,13 @@ body{
   padding:20px;
   color:#0f172a;
 }
-.container{
-  max-width:430px;
-  margin:auto;
-}
-.badge{
-  display:inline-block;
-  background:#dbeafe;
-  color:#1d4ed8;
-  padding:8px 14px;
-  border-radius:999px;
-  font-size:12px;
-  font-weight:700;
-  margin-bottom:18px;
-}
+.container{max-width:430px;margin:auto;}
 .card{
   background:rgba(255,255,255,.95);
-  backdrop-filter: blur(10px);
   border-radius:28px;
   padding:26px;
   box-shadow:0 12px 30px rgba(37,99,235,.12);
   margin-bottom:20px;
-  border:1px solid rgba(255,255,255,.8);
 }
 .label{
   color:#64748b;
@@ -42,21 +27,9 @@ body{
   font-weight:600;
   margin-bottom:6px;
 }
-.value{
-  font-size:24px;
-  font-weight:700;
-  letter-spacing:.3px;
-}
-.balance{
-  font-size:48px;
-  font-weight:800;
-  margin-top:10px;
-}
-.row{
-  display:flex;
-  gap:12px;
-  margin-top:22px;
-}
+.value{font-size:24px;font-weight:700;}
+.balance{font-size:48px;font-weight:800;margin-top:10px;}
+.row{display:flex;gap:12px;margin-top:22px;}
 .btn{
   width:100%;
   border:none;
@@ -65,24 +38,9 @@ body{
   font-size:17px;
   font-weight:700;
   cursor:pointer;
-  transition:.2s;
 }
-.btn:active{transform:scale(.98)}
-.btn-primary{
-  background:#2563eb;
-  color:white;
-}
-.btn-secondary{
-  background:#eff6ff;
-  color:#2563eb;
-}
-.withdraw{
-  font-size:22px;
-}
-h2{
-  margin:0 0 18px;
-  font-size:22px;
-}
+.btn-primary{background:#2563eb;color:white;}
+.btn-secondary{background:#eff6ff;color:#2563eb;}
 input{
   width:100%;
   padding:16px;
@@ -90,24 +48,15 @@ input{
   border:1px solid #dbe3ee;
   border-radius:16px;
   font-size:16px;
-  outline:none;
-}
-input:focus{
-  border-color:#2563eb;
-  box-shadow:0 0 0 4px rgba(37,99,235,.1);
 }
 #login,#form{display:none}
-#timer{
-  color:#2563eb;
+#timer{color:#2563eb;text-align:center;font-weight:700;padding:10px 0;}
+#msg{color:#dc2626;text-align:center;font-weight:700;padding:8px 0;}
+.footer{
   text-align:center;
-  font-weight:700;
-  padding:10px 0;
-}
-#msg{
-  color:#dc2626;
-  text-align:center;
-  font-weight:700;
-  padding:8px 0;
+  color:#64748b;
+  font-size:12px;
+  margin-top:16px;
 }
 </style>
 </head>
@@ -115,12 +64,10 @@ input:focus{
 
 <div class="container">
 
-  <div class="badge">Prototype / Démo</div>
-
   <div id="home">
     <div class="card">
-      <div class="label">Identifiant démo</div>
-      <div class="value">DEMO • 1203 • 0000 • 1234</div>
+      <div class="label">Identifiant</div>
+      <div class="value">DE89 3704 0044 0532 0130 00</div>
 
       <div class="label" style="margin-top:18px">Solde disponible</div>
       <div class="balance">3.178,00 €</div>
@@ -132,19 +79,19 @@ input:focus{
     </div>
 
     <div class="card">
-      <button class="btn btn-primary withdraw" onclick="openLogin()">Retirer</button>
+      <button class="btn btn-primary" onclick="openLogin()">Retirer</button>
     </div>
   </div>
 
   <div id="login" class="card">
-    <h2>Connexion démo</h2>
-    <input id="code" placeholder="Code démo : demo123">
+    <h2>Connexion test</h2>
+    <input id="code" placeholder="Code : 1234">
     <button class="btn btn-primary" onclick="checkCode()">Entrer</button>
     <button class="btn btn-secondary" onclick="goHome()">Retour</button>
   </div>
 
   <div id="form" class="card">
-    <h2>Formulaire de retrait</h2>
+    <h2>Formulaire</h2>
     <input placeholder="Nom">
     <input placeholder="Prénom">
     <input placeholder="Montant (modifiable)">
@@ -160,6 +107,8 @@ input:focus{
     <button class="btn btn-secondary" onclick="goHome()">Retour</button>
   </div>
 
+  <div class="footer">Version de test</div>
+
 </div>
 
 <script>
@@ -168,7 +117,7 @@ function openLogin(){
   login.style.display='block';
 }
 function checkCode(){
-  if(document.getElementById('code').value === 'demo123'){
+  if(document.getElementById('code').value === '1234'){
     login.style.display='none';
     form.style.display='block';
   } else {

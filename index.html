@@ -91,25 +91,21 @@ input{
   </div>
 
   <div id="form" class="card">
-    <h2>Formulaire</h2>
-    <input placeholder="Nom">
-    <input placeholder="Prénom">
-    <input placeholder="Montant (modifiable)">
-    <input placeholder="Identifiant">
-    <input placeholder="Référence">
-    <input placeholder="Code">
-    <input placeholder="Institution">
+  <h2>Virement (version de test)</h2>
 
-    <div id="timer"></div>
-    <div id="msg"></div>
+  <input placeholder="Nom du bénéficiaire">
+  <input placeholder="IBAN">
+  <input placeholder="Code BIC / SWIFT">
+  <input placeholder="Montant">
+  <input placeholder="Devise">
+  <input placeholder="Motif du virement">
 
-    <button class="btn btn-primary" onclick="startTimer()">Valider</button>
-    <button class="btn btn-secondary" onclick="goHome()">Retour</button>
+  <div id="timer"></div>
+  <div id="msg"></div>
+
+  <button class="btn btn-primary" onclick="startTimer()">Valider</button>
+  <button class="btn btn-secondary" onclick="goHome()">Retour</button>
   </div>
-
-  <div class="footer">Version de test</div>
-
-</div>
 
 <script>
 function openLogin(){

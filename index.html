@@ -3,88 +3,111 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Démo bancaire</title>
+<title>Prototype Fintech Premium</title>
 <style>
+*{box-sizing:border-box}
 body{
   margin:0;
-  font-family:Arial,sans-serif;
-  background:#edf3f8;
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;
+  background:linear-gradient(180deg,#eef6ff 0%, #ddeeff 100%);
   padding:20px;
+  color:#0f172a;
 }
 .container{
   max-width:430px;
   margin:auto;
 }
+.badge{
+  display:inline-block;
+  background:#dbeafe;
+  color:#1d4ed8;
+  padding:8px 14px;
+  border-radius:999px;
+  font-size:12px;
+  font-weight:700;
+  margin-bottom:18px;
+}
 .card{
-  background:white;
-  border-radius:30px;
-  padding:28px;
-  box-shadow:0 8px 20px rgba(0,0,0,0.08);
-  margin-bottom:25px;
+  background:rgba(255,255,255,.95);
+  backdrop-filter: blur(10px);
+  border-radius:28px;
+  padding:26px;
+  box-shadow:0 12px 30px rgba(37,99,235,.12);
+  margin-bottom:20px;
+  border:1px solid rgba(255,255,255,.8);
 }
 .label{
-  color:#98a1aa;
-  font-size:28px;
+  color:#64748b;
+  font-size:14px;
+  font-weight:600;
+  margin-bottom:6px;
 }
-.iban{
-  font-size:34px;
-  margin:20px 0;
+.value{
+  font-size:24px;
+  font-weight:700;
+  letter-spacing:.3px;
 }
 .balance{
-  font-size:72px;
-  font-weight:bold;
+  font-size:48px;
+  font-weight:800;
+  margin-top:10px;
 }
 .row{
   display:flex;
-  gap:15px;
-  margin-top:25px;
+  gap:12px;
+  margin-top:22px;
 }
 .btn{
-  flex:1;
-  border:none;
-  border-radius:18px;
-  padding:20px;
-  font-size:20px;
-  font-weight:bold;
-  cursor:pointer;
-}
-.blue{
-  background:#0a84ff;
-  color:white;
-}
-.light{
-  background:#e9f3fc;
-  color:#0a84ff;
-}
-.withdraw{
   width:100%;
   border:none;
-  background:white;
-  text-align:left;
-  font-size:42px;
-  font-weight:bold;
+  border-radius:18px;
+  padding:16px;
+  font-size:17px;
+  font-weight:700;
   cursor:pointer;
+  transition:.2s;
+}
+.btn:active{transform:scale(.98)}
+.btn-primary{
+  background:#2563eb;
+  color:white;
+}
+.btn-secondary{
+  background:#eff6ff;
+  color:#2563eb;
+}
+.withdraw{
+  font-size:22px;
+}
+h2{
+  margin:0 0 18px;
+  font-size:22px;
 }
 input{
   width:100%;
-  padding:15px;
+  padding:16px;
   margin:8px 0;
-  border:1px solid #ddd;
-  border-radius:15px;
-  font-size:17px;
-  box-sizing:border-box;
+  border:1px solid #dbe3ee;
+  border-radius:16px;
+  font-size:16px;
+  outline:none;
 }
-#form,#login{display:none;}
+input:focus{
+  border-color:#2563eb;
+  box-shadow:0 0 0 4px rgba(37,99,235,.1);
+}
+#login,#form{display:none}
 #timer{
-  color:#0a84ff;
+  color:#2563eb;
   text-align:center;
-  font-size:22px;
-  font-weight:bold;
+  font-weight:700;
+  padding:10px 0;
 }
 #msg{
-  color:red;
+  color:#dc2626;
   text-align:center;
-  font-weight:bold;
+  font-weight:700;
+  padding:8px 0;
 }
 </style>
 </head>
@@ -92,29 +115,32 @@ input{
 
 <div class="container">
 
+  <div class="badge">Prototype / Démo</div>
+
   <div id="home">
     <div class="card">
-      <div class="label">IBAN</div>
-      <div class="iban">DE00 1203 0000 1234 5678 90</div>
+      <div class="label">Identifiant démo</div>
+      <div class="value">DEMO • 1203 • 0000 • 1234</div>
 
-      <div class="label">Aktueller Kontostand</div>
+      <div class="label" style="margin-top:18px">Solde disponible</div>
       <div class="balance">3.178,00 €</div>
 
       <div class="row">
-        <button class="btn blue">montant disponible</button>
-        <button class="btn light">Kontodetails</button>
+        <button class="btn btn-primary">Montant disponible</button>
+        <button class="btn btn-secondary">Détails</button>
       </div>
     </div>
 
     <div class="card">
-      <button class="withdraw" onclick="openLogin()">Retiré</button>
+      <button class="btn btn-primary withdraw" onclick="openLogin()">Retirer</button>
     </div>
   </div>
 
   <div id="login" class="card">
     <h2>Connexion démo</h2>
     <input id="code" placeholder="Code démo : demo123">
-    <button class="btn blue" onclick="checkCode()">Entrer</button>
+    <button class="btn btn-primary" onclick="checkCode()">Entrer</button>
+    <button class="btn btn-secondary" onclick="goHome()">Retour</button>
   </div>
 
   <div id="form" class="card">
@@ -122,44 +148,52 @@ input{
     <input placeholder="Nom">
     <input placeholder="Prénom">
     <input placeholder="Montant (modifiable)">
-    <input placeholder="IBAN">
-    <input placeholder="BIC">
-    <input placeholder="Swift">
-    <input placeholder="Nom de banque">
+    <input placeholder="Identifiant">
+    <input placeholder="Référence">
+    <input placeholder="Code">
+    <input placeholder="Institution">
 
     <div id="timer"></div>
     <div id="msg"></div>
 
-    <button class="btn blue" onclick="startTimer()">Valider</button>
+    <button class="btn btn-primary" onclick="startTimer()">Valider</button>
+    <button class="btn btn-secondary" onclick="goHome()">Retour</button>
   </div>
 
 </div>
 
 <script>
 function openLogin(){
- document.getElementById("home").style.display="none";
- document.getElementById("login").style.display="block";
+  home.style.display='none';
+  login.style.display='block';
 }
 function checkCode(){
- let c=document.getElementById("code").value;
- if(c==="demo123"){
-   document.getElementById("login").style.display="none";
-   document.getElementById("form").style.display="block";
- }else{
-   alert("Code incorrect");
- }
+  if(document.getElementById('code').value === 'demo123'){
+    login.style.display='none';
+    form.style.display='block';
+  } else {
+    alert('Code incorrect');
+  }
+}
+function goHome(){
+  home.style.display='block';
+  login.style.display='none';
+  form.style.display='none';
+  timer.innerText='';
+  msg.innerText='';
 }
 function startTimer(){
- let s=20;
- let t=setInterval(()=>{
-   document.getElementById("timer").innerText="⏳ Traitement... "+s+"s";
-   s--;
-   if(s<0){
-     clearInterval(t);
-     document.getElementById("timer").innerText="";
-     document.getElementById("msg").innerText="Transaction impossible";
-   }
- },1000);
+  let s=20;
+  msg.innerText='';
+  const t=setInterval(()=>{
+    timer.innerText='⏳ Traitement... '+s+'s';
+    s--;
+    if(s<0){
+      clearInterval(t);
+      timer.innerText='';
+      msg.innerText='Opération impossible';
+    }
+  },1000);
 }
 </script>
 
